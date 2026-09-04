@@ -12,7 +12,7 @@
   };
 
   const year = document.getElementById("year");
-  if (year) year.textContent = String(new Date().getFullYear());
+  if (year) year.textContent = String(new Date().getFullYear() +1);
 
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
