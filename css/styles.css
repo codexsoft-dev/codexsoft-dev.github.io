@@ -1098,11 +1098,30 @@ body.nav-open .menu-toggle__bar:nth-child(4) {
   place-items: center;
   border-radius: 0;
   border: 0;
-  color: #94a3b8;
+}
+
+.footer__social .footer__social-link--github,
+.footer__social .footer__social-link--github:hover {
+  color: #fff;
+}
+
+.footer__social .footer__social-link--linkedin,
+.footer__social .footer__social-link--linkedin:hover {
+  color: #0a66c2;
+}
+
+.footer__social .footer__social-link--x,
+.footer__social .footer__social-link--x:hover {
+  color: #fff;
+}
+
+.footer__social .footer__social-link--mail,
+.footer__social .footer__social-link--mail:hover {
+  color: #ea4335;
 }
 
 .footer__social a:hover {
-  color: #fff;
+  filter: brightness(1.18);
   border-color: transparent;
 }
 
