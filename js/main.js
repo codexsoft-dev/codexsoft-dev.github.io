@@ -1,11 +1,14 @@
 (function () {
   const header = document.getElementById("header");
   const toggle = document.getElementById("menuToggle");
+  const overlay = document.getElementById("navOverlay");
   const nav = document.getElementById("nav");
   const modal = document.getElementById("contactModal");
   const form = document.getElementById("contactForm");
   const status = document.getElementById("formStatus");
   const links = Array.from(document.querySelectorAll(".nav__link"));
+  const toggleLabel = toggle ? toggle.querySelector(".sr-only") : null;
+  const desktopNavQuery = window.matchMedia("(min-width: 1025px)");
 
   const onScroll = () => {
     header.classList.toggle("is-scrolled", window.scrollY > 12);
@@ -17,17 +20,43 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  toggle.addEventListener("click", () => {
-    const open = document.body.classList.toggle("nav-open");
-    toggle.setAttribute("aria-expanded", String(open));
-  });
+  const syncBodyLock = () => {
+    const lock = document.body.classList.contains("nav-open") || (modal && !modal.hidden);
+    document.body.style.overflow = lock ? "hidden" : "";
+  };
+
+  const setNavOpen = (open) => {
+    document.body.classList.toggle("nav-open", open);
+    if (toggle) toggle.setAttribute("aria-expanded", String(open));
+    if (toggleLabel) toggleLabel.textContent = open ? "Close menu" : "Open menu";
+    if (overlay) overlay.setAttribute("aria-hidden", String(!open));
+    syncBodyLock();
+  };
+
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      setNavOpen(!document.body.classList.contains("nav-open"));
+    });
+  }
+
+  if (overlay) {
+    overlay.addEventListener("click", () => setNavOpen(false));
+  }
 
   nav.addEventListener("click", (event) => {
-    if (event.target.closest("a")) {
-      document.body.classList.remove("nav-open");
-      toggle.setAttribute("aria-expanded", "false");
+    if (event.target.closest("a") || event.target.closest("[data-open-contact]")) {
+      setNavOpen(false);
     }
   });
+
+  const onDesktopNav = (event) => {
+    if (event.matches) setNavOpen(false);
+  };
+  if (desktopNavQuery.addEventListener) {
+    desktopNavQuery.addEventListener("change", onDesktopNav);
+  } else if (desktopNavQuery.addListener) {
+    desktopNavQuery.addListener(onDesktopNav);
+  }
 
   const sections = ["home", "services", "technologies", "about", "process", "projects", "blog"]
     .map((id) => document.getElementById(id))
@@ -50,21 +79,20 @@
 
   const openModal = () => {
     modal.hidden = false;
-    document.body.style.overflow = "hidden";
+    syncBodyLock();
     const field = modal.querySelector("input");
     if (field) field.focus();
   };
 
   const closeModal = () => {
     modal.hidden = true;
-    document.body.style.overflow = "";
+    syncBodyLock();
     if (status) status.textContent = "";
   };
 
   document.querySelectorAll("[data-open-contact]").forEach((el) => {
     el.addEventListener("click", () => {
-      document.body.classList.remove("nav-open");
-      toggle.setAttribute("aria-expanded", "false");
+      setNavOpen(false);
       openModal();
     });
   });
@@ -74,7 +102,9 @@
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !modal.hidden) closeModal();
+    if (event.key !== "Escape") return;
+    if (modal && !modal.hidden) closeModal();
+    else if (document.body.classList.contains("nav-open")) setNavOpen(false);
   });
 
   form.addEventListener("submit", (event) => {

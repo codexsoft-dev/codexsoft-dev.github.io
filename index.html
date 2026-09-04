@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Codex Soft | We build. We scale. You grow.</title>
     <meta
       name="description"
@@ -26,7 +26,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css?v=codex-12" />
+    <link rel="stylesheet" href="css/styles.css?v=codex-13" />
   </head>
   <body>
     <header class="header" id="header">
@@ -66,6 +66,9 @@
         </button>
       </div>
     </header>
+    <button class="nav-overlay" id="navOverlay" type="button" tabindex="-1" aria-hidden="true">
+      <span class="sr-only">Close menu</span>
+    </button>
 
     <main>
       <section class="hero" id="home">
@@ -146,7 +149,7 @@
             <p class="eyebrow">What we do</p>
             <h2>End-to-end software solutions</h2>
             <p class="section__lead">
-              From architecture and development to deployment and operations,<br />
+              From architecture and development to deployment and operations,<br class="break-desktop" />
               we cover the full lifecycle.
             </p>
           </div>
