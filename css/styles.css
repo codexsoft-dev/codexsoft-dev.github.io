@@ -1492,6 +1492,25 @@ body.nav-open .menu-toggle__bar:nth-child(4) {
     width: 100%;
   }
 
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-content: stretch;
+    gap: 22px 12px;
+  }
+
+  .tech-grid li {
+    min-width: 0;
+    width: 100%;
+    font-size: 12px;
+  }
+
+  .tech-grid img,
+  .tech-grid__wide {
+    width: 52px;
+    height: 42px;
+  }
+
   .pill-row {
     gap: 14px 10px;
   }
