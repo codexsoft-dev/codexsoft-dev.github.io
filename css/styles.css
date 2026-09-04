@@ -329,7 +329,7 @@ body.nav-open .menu-toggle__bar:nth-child(4) {
 .hero {
   position: relative;
   background: #020617;
-  padding: calc(var(--header) + 36px) 0 56px;
+  padding: calc(var(--header) + 36px) 0 0;
   overflow: hidden;
 }
 
@@ -526,7 +526,7 @@ body.nav-open .menu-toggle__bar:nth-child(4) {
 .hero__rule {
   width: min(calc(100% - 2 * var(--page-gutter)), var(--container));
   height: 2px;
-  margin: 36px auto 0;
+  margin: 64px auto;
   border-radius: 999px;
   background: var(--accent-gradient);
   -webkit-mask-image: linear-gradient(
@@ -552,6 +552,10 @@ body.nav-open .menu-toggle__bar:nth-child(4) {
 
 .section {
   padding: 92px 0;
+}
+
+#services {
+  padding-top: 0;
 }
 
 .section--tight {
@@ -1378,7 +1382,7 @@ body.nav-open .menu-toggle__bar:nth-child(4) {
   }
 
   .hero {
-    padding: calc(var(--header) + 24px) 0 40px;
+    padding: calc(var(--header) + 24px) 0 0;
   }
 
   .hero__grid {
