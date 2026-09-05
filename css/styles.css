@@ -1208,8 +1208,8 @@ body.nav-open .menu-toggle__bar:nth-child(4) {
   font-weight: 500;
 }
 
-.footer__site:hover {
-  color: #7dd3fc;
+.footer a.footer__site:hover {
+  color: #38bdf8;
 }
 
 .modal[hidden] {
