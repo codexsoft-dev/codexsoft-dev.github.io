@@ -2,10 +2,15 @@
   position: relative;
   isolation: isolate;
   min-height: 100svh;
+  display: grid;
+  grid-template-rows: minmax(4.75rem, 1fr) auto minmax(0, 1fr);
+  padding: 0 clamp(1.1rem, 5vw, 3rem);
+}
+
+.top-slot {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  padding: clamp(1.25rem, 4vw, 2.75rem) clamp(1.1rem, 5vw, 3rem) 1.5rem;
 }
 
 .page::before,
@@ -93,12 +98,13 @@
   margin: 0;
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.55rem 1.25rem;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: 0.78rem 1.85rem;
   border: 1.5px solid rgba(56, 189, 248, 0.85);
   border-radius: 999px;
   color: var(--cyan);
-  font-size: clamp(0.68rem, 2vw, 0.82rem);
+  font-size: clamp(0.82rem, 2.4vw, 1.08rem);
   font-weight: 700;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -108,8 +114,8 @@
 .badge::before,
 .badge::after {
   content: "";
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--cyan);
   box-shadow: 0 0 8px var(--cyan);
@@ -228,7 +234,6 @@
   .hero {
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
     grid-template-areas:
-      "badge scene"
       "title scene"
       "lede scene";
     justify-items: start;
@@ -238,7 +243,6 @@
     row-gap: 0.9rem;
   }
 
-  .badge { grid-area: badge; }
   .hero h1 { grid-area: title; font-size: clamp(2.4rem, 4.2vw, 3.6rem); }
   .lede { grid-area: lede; }
   .scene { grid-area: scene; width: 100%; }
