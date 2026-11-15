@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package fleetrelay.driver.v1;
+
+option go_package = "fleetrelay/internal/driver/grpcv1;grpcv1";
+
+service DriverService {
+  rpc GetDriver(GetDriverRequest) returns (Driver);
+  rpc SubmitVerification(SubmitVerificationRequest) returns (Driver);
+  rpc DecideVerification(DecideVerificationRequest) returns (Driver);
+  rpc FailCompliance(FailComplianceRequest) returns (Driver);
+}
+
+message Driver {
+  string id = 1;
+  string partner_id = 2;
+  string status = 3;
+  string license_no = 4;
+  string license_expires_at = 5;
+}
+
+message GetDriverRequest {
+  string id = 1;
+}
+
+message SubmitVerificationRequest {
+  string id = 1;
+  string event_id = 2;
+}
+
+message DecideVerificationRequest {
+  string id = 1;
+  bool approve = 2;
+  string reason = 3;
+  string event_id = 4;
+}
+
+message FailComplianceRequest {
+  string id = 1;
+  string reason = 2;
+  string event_id = 3;
+}

@@ -1,0 +1,70 @@
+# Computer-B: PostgreSQL + Redis.
+# Kafka se ovde NE pokreće — go-consumer je klijent ka brokeru na Computer-A.
+#
+# Upotreba:
+#   copy env.b.example .env.b
+#   docker compose --env-file .env.b -f compose.b.yml up -d
+
+name: fleetrelay-b
+
+services:
+  postgres:
+    image: postgres:16.6
+    hostname: postgres
+    container_name: fleetrelay-postgres
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-fleetrelay}
+      POSTGRES_USER: ${POSTGRES_USER:-fleetrelay}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-fleetrelay}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../migrations/postgres/000001_init.up.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-fleetrelay} -d ${POSTGRES_DB:-fleetrelay}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - fleetrelay-b
+    command:
+      - postgres
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - work_mem=16MB
+      - -c
+      - max_wal_size=1GB
+      - -c
+      - synchronous_commit=off
+      # synchronous_commit=off je namerno za burst rollup u demou, ne za produkcioni KYC.
+
+  redis:
+    image: redis:7.4-alpine
+    hostname: redis
+    container_name: fleetrelay-redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    command: ["redis-server", "--appendonly", "yes", "--save", "60", "10000"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+    networks:
+      - fleetrelay-b
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  fleetrelay-b:
+    name: fleetrelay-b
+    driver: bridge
