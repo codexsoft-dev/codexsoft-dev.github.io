@@ -97,6 +97,8 @@
         current = section;
       }
     });
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    if (atBottom) current = sections[sections.length - 1];
     if (current) setActive(current.id);
   }
 
