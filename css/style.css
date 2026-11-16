@@ -1222,7 +1222,7 @@
 
   .tech-tile:hover {
     box-shadow: var(--shadow-neon);
-    border-color: oklch(83% .15 212 / .7);
+    border-color: oklch(74.9% .137 230 / .7);
     transform: translateY(-3px);
   }
 
@@ -2470,7 +2470,7 @@
   }
 
   .text-glow {
-    text-shadow: 0 0 18px oklch(83% .15 212 / .55);
+    text-shadow: 0 0 18px oklch(74.9% .137 230 / .55);
   }
 
   .group-focus-within\/menu-item\:opacity-100:is(:where(.group\/menu-item):focus-within *) {
@@ -2926,7 +2926,7 @@
     }
 
     .hover\:text-glow:hover {
-      text-shadow: 0 0 18px oklch(83% .15 212 / .55);
+      text-shadow: 0 0 18px oklch(74.9% .137 230 / .55);
     }
 
     .group-data-\[collapsible\=offcanvas\]\:hover\:bg-sidebar:is(:where(.group)[data-collapsible="offcanvas"] *):hover {
@@ -4135,7 +4135,7 @@
   --card-foreground: oklch(97% .01 250);
   --popover: oklch(17% .05 266);
   --popover-foreground: oklch(97% .01 250);
-  --primary: oklch(83% .15 212);
+  --primary: oklch(74.9% .137 230);
   --primary-foreground: oklch(16% .05 265);
   --secondary: oklch(23% .07 266);
   --secondary-foreground: oklch(97% .01 250);
@@ -4148,20 +4148,20 @@
   --destructive-foreground: oklch(98% .01 250);
   --border: oklch(55% .16 262 / .35);
   --input: oklch(55% .16 262 / .4);
-  --ring: oklch(83% .15 212);
-  --chart-1: oklch(83% .15 212);
+  --ring: oklch(74.9% .137 230);
+  --chart-1: oklch(74.9% .137 230);
   --chart-2: oklch(62% .21 262);
   --chart-3: oklch(62% .23 292);
   --chart-4: oklch(75% .17 65);
   --chart-5: oklch(60% .23 27);
   --sidebar: oklch(17% .05 266);
   --sidebar-foreground: oklch(97% .01 250);
-  --sidebar-primary: oklch(83% .15 212);
+  --sidebar-primary: oklch(74.9% .137 230);
   --sidebar-primary-foreground: oklch(16% .05 265);
   --sidebar-accent: oklch(23% .07 266);
   --sidebar-accent-foreground: oklch(97% .01 250);
   --sidebar-border: oklch(55% .16 262 / .35);
-  --sidebar-ring: oklch(83% .15 212);
+  --sidebar-ring: oklch(74.9% .137 230);
   --brand-go: oklch(80% .13 210);
   --brand-java: oklch(66% .2 35);
   --brand-postgres: oklch(62% .12 250);
@@ -4179,7 +4179,7 @@
   --gradient-panel: linear-gradient(160deg, oklch(22% .08 266 / .75), oklch(15% .05 268 / .6));
   --gradient-tile: linear-gradient(160deg, oklch(25% .07 266 / .7), oklch(18% .05 268 / .6));
   --gradient-hero-fade: linear-gradient(180deg, transparent 55%, var(--background) 100%);
-  --shadow-neon: 0 0 24px -4px oklch(83% .15 212 / .7), 0 0 60px -20px oklch(83% .15 212 / .6);
+  --shadow-neon: 0 0 24px -4px oklch(74.9% .137 230 / .7), 0 0 60px -20px oklch(74.9% .137 230 / .6);
   --shadow-panel: inset 0 1px 0 oklch(80% .12 240 / .15), 0 0 40px -20px oklch(62% .21 262 / .7);
 }
 
@@ -4644,6 +4644,132 @@ header nav .nav__link:hover::after {
 
   header nav .nav__link {
     font-size: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-header nav {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Burger menu matches codexsoft-dev.github.io below the desktop nav breakpoint. */
+.menu-toggle {
+  display: none;
+  position: relative;
+  z-index: 21;
+  width: 44px;
+  height: 44px;
+  margin-left: auto;
+  flex: none;
+  border: 0;
+  background: transparent;
+  padding: 10px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.menu-toggle__bar {
+  display: block;
+  height: 2px;
+  margin: 6px 0;
+  background: #fff;
+  border-radius: 1px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+body.nav-open .menu-toggle__bar:nth-child(2) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+body.nav-open .menu-toggle__bar:nth-child(3) {
+  opacity: 0;
+}
+
+body.nav-open .menu-toggle__bar:nth-child(4) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 19;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: rgba(2, 6, 23, 0.62);
+  cursor: pointer;
+}
+
+body.nav-open {
+  overflow: hidden;
+}
+
+body.nav-open .nav-overlay {
+  display: block;
+}
+
+@media (max-width: 1023px) {
+  .page-shell {
+    padding-top: 88px;
+  }
+
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    background: transparent;
+  }
+
+  .site-header.is-scrolled,
+  body.nav-open .site-header {
+    backdrop-filter: blur(18px);
+    background: rgba(2, 6, 23, 0.88);
+    box-shadow: inset 0 -1px 0 rgba(148, 163, 184, 0.12);
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .site-header nav {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: max(12px, env(safe-area-inset-left));
+    right: max(12px, env(safe-area-inset-right));
+    z-index: 31;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    max-height: calc(100dvh - 112px);
+    overflow-y: auto;
+    padding: 12px 0;
+    border-radius: 16px;
+    background: rgba(8, 14, 32, 0.96);
+    border: 1px solid rgba(99, 102, 241, 0.22);
+  }
+
+  body.nav-open .site-header nav {
+    display: flex;
+  }
+
+  .site-header nav .nav__link {
+    align-self: stretch;
+    width: 100%;
+    margin: 0;
+    padding: 14px 24px;
+    box-sizing: border-box;
+    font-size: 15px;
   }
 }
 
