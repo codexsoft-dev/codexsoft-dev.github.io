@@ -23,7 +23,24 @@
   if (overlay) overlay.addEventListener("click", function () { setOpen(false); });
 
   nav.addEventListener("click", function (event) {
-    if (event.target.closest("a")) setOpen(false);
+    var link = event.target.closest("a");
+    if (!link) return;
+    var href = link.getAttribute("href") || "";
+    var id = href.charAt(0) === "#" ? href.slice(1) : "";
+    var target = id ? document.getElementById(id) : null;
+    var fixed = header && getComputedStyle(header).position === "fixed";
+    if (fixed && target) {
+      event.preventDefault();
+      setOpen(false);
+      requestAnimationFrame(function () {
+        var offset = header.getBoundingClientRect().height + 16;
+        var top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        if (history.pushState) history.pushState(null, "", "#" + id);
+      });
+      return;
+    }
+    setOpen(false);
   });
 
   document.addEventListener("keydown", function (event) {
@@ -45,7 +62,7 @@
 
 (function () {
   var links = Array.prototype.slice.call(document.querySelectorAll('header nav a[href^="#"]'));
-  if (!links.length || !("IntersectionObserver" in window)) return;
+  if (!links.length) return;
 
   function setActive(id) {
     links.forEach(function (a) {
@@ -57,20 +74,36 @@
     .map(function (a) { return document.querySelector(a.getAttribute("href")); })
     .filter(Boolean);
 
-  var observer = new IntersectionObserver(
-    function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) setActive(entry.target.id);
-      });
-    },
-    { rootMargin: "-45% 0px -50% 0px" }
-  );
-  sections.forEach(function (s) { observer.observe(s); });
+  // The active item is the section that has reached the line just under the
+  // fixed header. A band in the middle of the screen was selecting the next
+  // section (About highlighted Education).
+  function clearance() {
+    var bar = document.querySelector(".site-header");
+    if (!bar || getComputedStyle(bar).position !== "fixed") return 32;
+    return bar.getBoundingClientRect().height + 24;
+  }
 
-  // Near the top of the page the hero ("Home") is always the active item.
-  function checkTop() { if (window.scrollY < 120) setActive("home"); }
-  window.addEventListener("scroll", checkTop, { passive: true });
-  setTimeout(checkTop, 50);
+  function updateActive() {
+    var line = clearance();
+    var current = sections[0];
+    var best = -Infinity;
+    var slack = 80;
+    sections.forEach(function (section) {
+      var top = section.getBoundingClientRect().top;
+      // Equal tops are side-by-side cards. Keep the earlier one so About
+      // does not get replaced by Education.
+      if (top <= line + slack && top > best) {
+        best = top;
+        current = section;
+      }
+    });
+    if (current) setActive(current.id);
+  }
+
+  window.addEventListener("scroll", updateActive, { passive: true });
+  window.addEventListener("resize", updateActive);
+  if ("onscrollend" in window) window.addEventListener("scrollend", updateActive);
+  updateActive();
 
   links.forEach(function (a) {
     a.addEventListener("click", function () { setActive(a.getAttribute("href").slice(1)); });

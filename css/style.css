@@ -4716,6 +4716,17 @@ body.nav-open .nav-overlay {
 @media (max-width: 1023px) {
   .page-shell {
     padding-top: 88px;
+    /* Let the last section scroll up clear of the fixed header. */
+    padding-bottom: calc(100dvh - 104px);
+  }
+
+  #home,
+  #skills,
+  #experience,
+  #about,
+  #education,
+  #contact {
+    scroll-margin-top: 104px;
   }
 
   .site-header {
