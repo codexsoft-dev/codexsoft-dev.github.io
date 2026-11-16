@@ -4868,3 +4868,44 @@ body.nav-open .nav-overlay {
     height: 42px;
   }
 }
+
+/* About values: four columns overlap on a narrow card, so stack into two rows until each label fits. */
+#about {
+  container-type: inline-size;
+}
+
+.about-points {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  row-gap: 1.5rem;
+}
+
+.about-points > * {
+  min-width: 0;
+  padding-inline: 0.15rem;
+}
+
+.about-points > :nth-child(3) {
+  border-left-width: 0;
+}
+
+@container (min-width: 17.25rem) {
+  .about-points {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    row-gap: 0;
+  }
+
+  .about-points > * {
+    font-size: 0.75rem;
+  }
+
+  .about-points > :nth-child(3) {
+    border-left-width: 1px;
+  }
+}
+
+@container (min-width: 22rem) {
+  .about-points > * {
+    font-size: 0.875rem;
+  }
+}
