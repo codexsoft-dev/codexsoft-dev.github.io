@@ -4646,3 +4646,81 @@ header nav .nav__link:hover::after {
     font-size: 14px;
   }
 }
+
+/* Technical Skills list matches codexsoft-dev sizes and stacking, kept in the right column. */
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 36px 42px;
+  margin: 0;
+  padding: 20px 0 0;
+  list-style: none;
+}
+
+.skill-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 108px;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  color: #94a3b8;
+  font-family: Poppins, "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: center;
+  transition: transform .25s;
+}
+
+.skill-list li:hover {
+  transform: translateY(-3px);
+  box-shadow: none;
+}
+
+.skill-list img {
+  width: 72px;
+  height: 56px;
+  object-fit: contain;
+  flex: none;
+  filter: drop-shadow(0 8px 16px rgba(2, 6, 23, 0.35));
+}
+
+@media (max-width: 720px) {
+  .skill-list {
+    gap: 24px 20px;
+  }
+
+  .skill-list li {
+    min-width: 88px;
+  }
+
+  .skill-list img {
+    width: 56px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .skill-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-content: stretch;
+    gap: 22px 12px;
+  }
+
+  .skill-list li {
+    min-width: 0;
+    width: 100%;
+    font-size: 12px;
+  }
+
+  .skill-list img {
+    width: 52px;
+    height: 42px;
+  }
+}
