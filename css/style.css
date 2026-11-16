@@ -4647,6 +4647,13 @@ header nav .nav__link:hover::after {
   }
 }
 
+/* Keep the whole portrait in frame. The midpoint between the first and second shirt button is 63% down the photo, so any tighter crop hides it above the neck. */
+.hero-portrait {
+  width: 100%;
+  aspect-ratio: 1024 / 1280;
+  min-height: 460px;
+}
+
 /* Technical Skills list matches codexsoft-dev sizes and stacking, kept in the right column. */
 .skill-list {
   display: flex;
