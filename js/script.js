@@ -90,10 +90,12 @@
     var slack = 80;
     sections.forEach(function (section) {
       var top = section.getBoundingClientRect().top;
-      // Equal tops are side-by-side cards. Keep the earlier one so About
-      // does not get replaced by Education.
-      if (top <= line + slack && top > best) {
+      // Equal tops are side-by-side cards. Keep About, even though Education
+      // now comes first in the menu.
+      if (top <= line + slack && top > best + 0.5) {
         best = top;
+        current = section;
+      } else if (top <= line + slack && Math.abs(top - best) <= 0.5 && section.id === "about") {
         current = section;
       }
     });
@@ -199,7 +201,13 @@
     el.addEventListener("click", function () {
       document.body.classList.remove("nav-open");
       var toggle = document.getElementById("menuToggle");
-      if (toggle) toggle.setAttribute("aria-expanded", "false");
+      if (toggle) {
+        toggle.setAttribute("aria-expanded", "false");
+        var label = toggle.querySelector(".sr-only");
+        if (label) label.textContent = "Open menu";
+      }
+      var overlay = document.getElementById("navOverlay");
+      if (overlay) overlay.setAttribute("aria-hidden", "true");
       openModal();
     });
   });

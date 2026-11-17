@@ -4603,6 +4603,13 @@ header nav {
   gap: 26px;
 }
 
+header nav button.nav__link {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: inherit;
+}
+
 header nav .nav__link {
   position: relative;
   padding: 8px 0;
