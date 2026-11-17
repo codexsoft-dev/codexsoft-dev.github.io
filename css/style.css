@@ -4959,6 +4959,31 @@ body.nav-open .nav-overlay {
   flex-direction: column;
 }
 
+.about-copy p + p {
+  margin-top: 1rem;
+}
+
+.about-rest {
+  margin-top: 1rem;
+}
+
+.about-more {
+  display: block;
+  width: fit-content;
+  margin-top: 0.85rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--primary);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.about-more:hover {
+  text-decoration: underline;
+}
+
 .education-follow {
   margin-top: auto;
   display: flex;

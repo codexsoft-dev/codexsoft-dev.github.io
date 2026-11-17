@@ -111,3 +111,18 @@
     a.addEventListener("click", function () { setActive(a.getAttribute("href").slice(1)); });
   });
 })();
+
+(function () {
+  var more = document.getElementById("aboutMore");
+  var less = document.getElementById("aboutLess");
+  var rest = document.getElementById("aboutRest");
+  if (!more || !less || !rest) return;
+  more.addEventListener("click", function () {
+    rest.hidden = false;
+    more.hidden = true;
+  });
+  less.addEventListener("click", function () {
+    rest.hidden = true;
+    more.hidden = false;
+  });
+})();
