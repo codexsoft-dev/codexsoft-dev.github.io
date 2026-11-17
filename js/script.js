@@ -117,12 +117,29 @@
   var less = document.getElementById("aboutLess");
   var rest = document.getElementById("aboutRest");
   if (!more || !less || !rest) return;
+
+  function pinScroll(change) {
+    var y = window.scrollY;
+    if (document.activeElement && document.activeElement.blur) {
+      document.activeElement.blur();
+    }
+    change();
+    window.scrollTo(0, y);
+    requestAnimationFrame(function () {
+      window.scrollTo(0, y);
+    });
+  }
+
   more.addEventListener("click", function () {
-    rest.hidden = false;
-    more.hidden = true;
+    pinScroll(function () {
+      rest.hidden = false;
+      more.hidden = true;
+    });
   });
   less.addEventListener("click", function () {
-    rest.hidden = true;
-    more.hidden = false;
+    pinScroll(function () {
+      rest.hidden = true;
+      more.hidden = false;
+    });
   });
 })();
