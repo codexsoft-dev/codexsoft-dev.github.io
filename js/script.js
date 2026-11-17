@@ -116,52 +116,62 @@
   var more = document.getElementById("aboutMore");
   var less = document.getElementById("aboutLess");
   var rest = document.getElementById("aboutRest");
+  var courses = document.getElementById("showAllCourses");
+  var courseItems = document.querySelectorAll("#education .edu-extra");
+  var wide = window.matchMedia("(min-width: 1024px)");
   if (!more || !less || !rest) return;
 
   // A mouse click would focus the control. Hiding that control then moves
   // focus onto "show less...", and the browser scrolls it into view.
   more.addEventListener("mousedown", function (event) { event.preventDefault(); });
   less.addEventListener("mousedown", function (event) { event.preventDefault(); });
+  if (courses) courses.addEventListener("mousedown", function (event) { event.preventDefault(); });
 
-  function reveal(event) {
-    event.preventDefault();
+  function expandAbout() {
     rest.hidden = false;
     more.hidden = true;
   }
 
-  function collapse(event) {
+  function expandCourses() {
+    if (!courses) return;
+    courseItems.forEach(function (item) { item.hidden = false; });
+    courses.hidden = true;
+    courses.setAttribute("aria-expanded", "true");
+  }
+
+  more.addEventListener("click", function (event) {
+    event.preventDefault();
+    expandAbout();
+    if (wide.matches) expandCourses();
+  });
+
+  less.addEventListener("click", function (event) {
     event.preventDefault();
     rest.hidden = true;
     more.hidden = false;
-  }
+  });
 
-  more.addEventListener("click", reveal);
-  less.addEventListener("click", collapse);
+  if (courses) {
+    courses.addEventListener("click", function (event) {
+      event.preventDefault();
+      expandCourses();
+      if (wide.matches) expandAbout();
+    });
+  }
 })();
 
 (function () {
   var trigger = document.getElementById("exploreSkills");
   var extras = document.querySelectorAll("#skills .skill-extra");
+  var moreCopy = document.getElementById("skillsMore");
   if (!trigger || !extras.length) return;
 
   trigger.addEventListener("mousedown", function (event) { event.preventDefault(); });
   trigger.addEventListener("click", function (event) {
     event.preventDefault();
+    if (moreCopy) moreCopy.hidden = false;
     extras.forEach(function (item) { item.hidden = false; });
     trigger.setAttribute("aria-expanded", "true");
   });
 })();
 
-(function () {
-  var trigger = document.getElementById("showAllCourses");
-  var extras = document.querySelectorAll("#education .edu-extra");
-  if (!trigger || !extras.length) return;
-
-  trigger.addEventListener("mousedown", function (event) { event.preventDefault(); });
-  trigger.addEventListener("click", function (event) {
-    event.preventDefault();
-    extras.forEach(function (item) { item.hidden = false; });
-    trigger.hidden = true;
-    trigger.setAttribute("aria-expanded", "true");
-  });
-})();
