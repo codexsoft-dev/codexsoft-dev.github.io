@@ -172,3 +172,60 @@
   });
 })();
 
+(function () {
+  var modal = document.getElementById("contactModal");
+  var form = document.getElementById("contactForm");
+  var status = document.getElementById("formStatus");
+  if (!modal || !form) return;
+
+  function lockPage(open) {
+    document.body.style.overflow = open ? "hidden" : "";
+  }
+
+  function openModal() {
+    modal.hidden = false;
+    lockPage(true);
+    var field = modal.querySelector("input");
+    if (field) field.focus();
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    lockPage(false);
+    if (status) status.textContent = "";
+  }
+
+  document.querySelectorAll("[data-open-contact]").forEach(function (el) {
+    el.addEventListener("click", function () {
+      document.body.classList.remove("nav-open");
+      var toggle = document.getElementById("menuToggle");
+      if (toggle) toggle.setAttribute("aria-expanded", "false");
+      openModal();
+    });
+  });
+
+  document.querySelectorAll("[data-close-contact]").forEach(function (el) {
+    el.addEventListener("click", closeModal);
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && !modal.hidden) closeModal();
+  });
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var data = new FormData(form);
+    var name = String(data.get("name") || "").trim();
+    var email = String(data.get("email") || "").trim();
+    var message = String(data.get("message") || "").trim();
+
+    if (!name || !email || !message) {
+      status.textContent = "Please fill in name, email and message.";
+      return;
+    }
+
+    status.textContent = "Thanks — we will get back to you shortly.";
+    form.reset();
+  });
+})();
+
