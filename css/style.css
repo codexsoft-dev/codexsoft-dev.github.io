@@ -5461,16 +5461,16 @@ a.edu-link:hover {
   min-height: 44px;
   padding: 0 22px;
   border: 1px solid transparent;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #0068fb 0%, #5a46fa 100%);
-  color: #fff;
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--primary);
+  color: var(--primary-foreground);
   font-family: Poppins, "Segoe UI", sans-serif;
   font-size: 15px;
   font-weight: 600;
   line-height: 24px;
   letter-spacing: normal;
   text-transform: none;
-  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
+  box-shadow: var(--shadow-neon);
   cursor: pointer;
   white-space: nowrap;
 }
@@ -5482,7 +5482,7 @@ a.edu-link:hover {
 }
 
 .talk-btn:hover {
-  filter: brightness(1.08);
+  filter: brightness(1.1);
 }
 
 .talk-btn:focus-visible {
@@ -5588,15 +5588,24 @@ a.edu-link:hover {
   border-color: transparent;
 }
 
-.contact-form .talk-btn {
-  justify-self: start;
+.contact-form__actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 7rem;
 }
 
 .form-status {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
   min-height: 1.25rem;
   margin: 0;
   color: var(--primary);
   font-size: 14px;
+  text-align: center;
 }
 
 .talk-btn.header-talk {
