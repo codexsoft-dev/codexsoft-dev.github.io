@@ -138,3 +138,30 @@
   more.addEventListener("click", reveal);
   less.addEventListener("click", collapse);
 })();
+
+(function () {
+  var trigger = document.getElementById("exploreSkills");
+  var extras = document.querySelectorAll("#skills .skill-extra");
+  if (!trigger || !extras.length) return;
+
+  trigger.addEventListener("mousedown", function (event) { event.preventDefault(); });
+  trigger.addEventListener("click", function (event) {
+    event.preventDefault();
+    extras.forEach(function (item) { item.hidden = false; });
+    trigger.setAttribute("aria-expanded", "true");
+  });
+})();
+
+(function () {
+  var trigger = document.getElementById("showAllCourses");
+  var extras = document.querySelectorAll("#education .edu-extra");
+  if (!trigger || !extras.length) return;
+
+  trigger.addEventListener("mousedown", function (event) { event.preventDefault(); });
+  trigger.addEventListener("click", function (event) {
+    event.preventDefault();
+    extras.forEach(function (item) { item.hidden = false; });
+    trigger.hidden = true;
+    trigger.setAttribute("aria-expanded", "true");
+  });
+})();

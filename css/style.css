@@ -4864,6 +4864,15 @@ body.nav-open .nav-overlay {
   box-shadow: none;
 }
 
+.skill-list li.skill-extra {
+  opacity: 0.72;
+  cursor: default;
+}
+
+.skill-list li.skill-extra:hover {
+  transform: none;
+}
+
 .skill-list img {
   width: 72px;
   height: 56px;
@@ -4986,6 +4995,96 @@ html {
 
 .about-more:hover {
   text-decoration: underline;
+}
+
+.edu-timeline {
+  margin-top: 1.75rem;
+}
+
+.edu-book {
+  width: 3rem;
+  height: 3rem;
+  color: var(--violet);
+}
+
+.edu-copy {
+  margin-top: 0.7rem;
+  color: #94a3b8;
+  font-size: 0.925rem;
+  line-height: 1.65;
+}
+
+.edu-copy p + p {
+  margin-top: 0.75rem;
+}
+
+.edu-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.edu-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #e8eefc;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+}
+
+a.edu-link:hover {
+  color: #fff;
+}
+
+.edu-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: none;
+  display: block;
+}
+
+.show-courses {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  margin-top: 1.35rem;
+  margin-left: 6.75rem;
+  height: 2.5rem;
+  padding: 0 1.05rem;
+  border: 1px solid color-mix(in oklab, var(--primary) 70%, transparent);
+  border-radius: 0.75rem;
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.show-courses:hover {
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+}
+
+@media (min-width: 640px) {
+  .show-courses {
+    margin-left: 7.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .show-courses {
+    margin-left: 8.25rem;
+  }
 }
 
 .education-follow {
