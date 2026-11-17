@@ -5001,6 +5001,72 @@ html {
   margin-top: 1.75rem;
 }
 
+.edu-timeline > .timeline-line {
+  display: none;
+}
+
+.edu-timeline > li > span:first-of-type,
+#experience ol > li > span:first-of-type {
+  z-index: 1;
+  box-sizing: border-box;
+  background: var(--primary);
+  border: 2px solid oklch(17% 0.03 250);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 16%, transparent);
+}
+
+#experience .timeline-line {
+  width: 2px;
+  background: color-mix(in oklab, var(--primary) 42%, transparent);
+  box-shadow: none;
+}
+
+.edu-timeline > li:not([hidden]):has(+ li:not([hidden]))::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: calc(0.75rem + 0.4375rem);
+  bottom: calc(-2rem - 0.75rem - 0.4375rem);
+  left: -31px;
+  width: 2px;
+  background: color-mix(in oklab, var(--primary) 42%, transparent);
+  pointer-events: none;
+}
+
+.edu-timeline {
+  padding-bottom: 1.6rem;
+}
+
+.edu-timeline > li:not([hidden]):not(:last-child):not(:has(+ li:not([hidden])))::after,
+.edu-timeline > li:last-child:not([hidden])::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: calc(0.75rem + 0.4375rem);
+  bottom: -3.4rem;
+  left: -31px;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--primary) 42%, transparent) 0%,
+    color-mix(in oklab, var(--primary) 42%, transparent) 22%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.edu-timeline > li:last-child:not([hidden])::after {
+  bottom: auto;
+  height: calc((100% - 0.75rem - 0.4375rem + 3.4rem) / 2);
+}
+
+@media (min-width: 768px) {
+  .edu-timeline > li:not([hidden]):has(+ li:not([hidden]))::after,
+  .edu-timeline > li:not([hidden]):not(:last-child):not(:has(+ li:not([hidden])))::after,
+  .edu-timeline > li:last-child:not([hidden])::after {
+    left: -41px;
+  }
+}
+
 .edu-book {
   width: 3rem;
   height: 3rem;
@@ -5014,8 +5080,19 @@ html {
   line-height: 1.65;
 }
 
-.edu-copy p + p {
+.edu-copy p + p,
+.edu-copy ul + p {
   margin-top: 0.75rem;
+}
+
+.edu-copy ul {
+  margin: 0.55rem 0 0;
+  padding-left: 1.15rem;
+  list-style: disc;
+}
+
+.edu-copy li + li {
+  margin-top: 0.28rem;
 }
 
 .edu-links {
@@ -5176,9 +5253,16 @@ a.edu-link:hover {
 
 .go-mark,
 .finbet-mark,
-.ing-mark {
+.ing-mark,
+.edu-mark {
   box-sizing: border-box;
   border: 2px solid #fff;
+}
+
+.edu-mark {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
 }
 
 .header-talk {
@@ -5267,7 +5351,7 @@ a.edu-link:hover {
 @media (min-width: 1024px) {
   .profile-split {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
     grid-template-areas:
       "education code"
       "education about";
@@ -5275,6 +5359,11 @@ a.edu-link:hover {
 
   .profile-split__education {
     grid-area: education;
+    position: relative;
+    z-index: 2;
+    height: 0;
+    min-height: 100%;
+    overflow: visible;
   }
 
   .profile-split__code {
@@ -5284,6 +5373,33 @@ a.edu-link:hover {
 
   .profile-split__about {
     grid-area: about;
+    align-self: start;
+  }
+
+  .edu-timeline {
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: auto;
+    padding-right: 1.35rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
+  }
+
+  .education-follow {
+    padding-bottom: 0.85rem;
+  }
+
+  .go-callout {
+    transform: translate(calc(30px - 10%), calc(-50% - 10px));
+  }
+
+  .edu-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 1rem;
+    row-gap: 0.5rem;
   }
 }
 

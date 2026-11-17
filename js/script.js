@@ -118,7 +118,6 @@
   var rest = document.getElementById("aboutRest");
   var courses = document.getElementById("showAllCourses");
   var courseItems = document.querySelectorAll("#education .edu-extra");
-  var wide = window.matchMedia("(min-width: 1024px)");
   if (!more || !less || !rest) return;
 
   // A mouse click would focus the control. Hiding that control then moves
@@ -142,7 +141,6 @@
   more.addEventListener("click", function (event) {
     event.preventDefault();
     expandAbout();
-    if (wide.matches) expandCourses();
   });
 
   less.addEventListener("click", function (event) {
@@ -155,7 +153,6 @@
     courses.addEventListener("click", function (event) {
       event.preventDefault();
       expandCourses();
-      if (wide.matches) expandAbout();
     });
   }
 })();
