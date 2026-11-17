@@ -4963,6 +4963,10 @@ body.nav-open .nav-overlay {
   margin-top: 1rem;
 }
 
+html {
+  overflow-anchor: none;
+}
+
 .about-rest {
   margin-top: 1rem;
 }

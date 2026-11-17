@@ -118,28 +118,23 @@
   var rest = document.getElementById("aboutRest");
   if (!more || !less || !rest) return;
 
-  function pinScroll(change) {
-    var y = window.scrollY;
-    if (document.activeElement && document.activeElement.blur) {
-      document.activeElement.blur();
-    }
-    change();
-    window.scrollTo(0, y);
-    requestAnimationFrame(function () {
-      window.scrollTo(0, y);
-    });
+  // A mouse click would focus the control. Hiding that control then moves
+  // focus onto "show less...", and the browser scrolls it into view.
+  more.addEventListener("mousedown", function (event) { event.preventDefault(); });
+  less.addEventListener("mousedown", function (event) { event.preventDefault(); });
+
+  function reveal(event) {
+    event.preventDefault();
+    rest.hidden = false;
+    more.hidden = true;
   }
 
-  more.addEventListener("click", function () {
-    pinScroll(function () {
-      rest.hidden = false;
-      more.hidden = true;
-    });
-  });
-  less.addEventListener("click", function () {
-    pinScroll(function () {
-      rest.hidden = true;
-      more.hidden = false;
-    });
-  });
+  function collapse(event) {
+    event.preventDefault();
+    rest.hidden = true;
+    more.hidden = false;
+  }
+
+  more.addEventListener("click", reveal);
+  less.addEventListener("click", collapse);
 })();
