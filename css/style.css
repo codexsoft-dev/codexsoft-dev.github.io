@@ -5432,7 +5432,7 @@ a.edu-link:hover {
 .code-window__bar em {
   margin-left: 10px;
   font-style: normal;
-  color: #64748b;
+  color: #7d8da3;
   font-size: 12px;
   font-family: "JetBrains Mono", Consolas, monospace;
 }
@@ -5451,7 +5451,7 @@ a.edu-link:hover {
 .code-window .t { color: #67e8f9; }
 .code-window .fn { color: #c4b5fd; }
 .code-window .s { color: #86efac; }
-.code-window .c { color: #64748b; }
+.code-window .c { color: #7d8da3; }
 
 @media (max-width: 720px) {
   .code-window pre {
