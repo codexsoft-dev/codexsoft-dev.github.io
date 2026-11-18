@@ -237,3 +237,8 @@
   });
 })();
 
+(function () {
+  var year = document.getElementById("copyrightYear");
+  if (year) year.textContent = String(new Date().getFullYear());
+})();
+
