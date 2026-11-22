@@ -4513,6 +4513,9 @@ body[data-scroll-locked] {
  */
 .hero-portrait {
   aspect-ratio: 1013 / 893;
+  /* Cut the logo outline off at the portrait's bottom edge so it never shows
+     below the portrait; the other sides stay unclipped. */
+  clip-path: inset(-100vh -100vw 0 -100vw);
 }
 
 .hero-portrait > img {
@@ -4614,4 +4617,26 @@ body > .min-h-screen > main {
  */
 .legal-backlink-bottom {
   margin-top: calc(2.5rem + 8.5px);
+}
+
+/*
+ * Phone hero buttons: when the three buttons no longer fit on one line
+ * (below 580px), "View My Work" sits alone on the first row and "Download CV"
+ * and "Let's Talk" share the second row, spanning the full content width so
+ * "Let's Talk" ends at the same distance from the right edge as the left
+ * padding. On the narrowest screens their side padding shrinks so both fit.
+ */
+@media (width < 36.25rem) {
+  .hero-cta {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+  .hero-cta > :first-child {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+  .hero-cta > :not(:first-child) {
+    padding-inline: clamp(0.5rem, calc((100vw - 272.2px) / 4), 1.75rem);
+  }
 }
