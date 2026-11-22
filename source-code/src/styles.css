@@ -1,0 +1,297 @@
+/*
+ * Tailwind v4 entry: config lives here, with no tailwind.config.js or PostCSS plugin.
+ * Web fonts load via <link> in src/routes/__root.tsx; never @import a remote URL here.
+ */
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * CODEX · SOFT design system — deep navy surfaces, periwinkle accent,
+ * square-edged cards and a geometric display face.
+ */
+
+@theme inline {
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --font-script: "Caveat", cursive;
+
+  --container-site: 78rem;
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-glow: var(--primary-glow);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  --color-band: var(--band);
+  --color-chrome: var(--chrome);
+  --color-inset: var(--inset);
+  --color-code: var(--code);
+  --color-code-keyword: var(--code-keyword);
+  --color-code-string: var(--code-string);
+  --color-code-comment: var(--code-comment);
+  --color-code-text: var(--code-text);
+  --color-window-red: var(--window-red);
+  --color-window-dot: var(--window-dot);
+  --color-node: var(--node);
+  --color-rail: var(--rail);
+  --color-hex: var(--hex);
+  --color-overlay: var(--overlay);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.25rem;
+
+  /* Surfaces */
+  --background: oklch(0.298 0.067 258.3); /* hero / experience navy */
+  --band: oklch(0.34 0.08 260.2); /* alternating section band */
+  --chrome: oklch(0.239 0.051 258.3); /* header + footer */
+  --card: oklch(0.374 0.081 257.1);
+  --card-foreground: oklch(0.978 0.01 261.8);
+  --inset: oklch(0.318 0.072 258); /* boxes inside cards */
+  --popover: oklch(0.27 0.06 258.3);
+  --popover-foreground: oklch(0.978 0.01 261.8);
+
+  /* Text */
+  --foreground: oklch(0.978 0.01 261.8);
+  --muted: oklch(0.34 0.08 260.2);
+  --muted-foreground: oklch(0.74 0.048 259.8);
+
+  /* Accent */
+  --primary: oklch(0.841 0.056 260.2);
+  --primary-glow: oklch(0.89 0.045 260.2);
+  --primary-foreground: oklch(0.239 0.051 258.3);
+  --secondary: oklch(0.374 0.081 257.1);
+  --secondary-foreground: oklch(0.978 0.01 261.8);
+  --accent: oklch(0.42 0.08 258);
+  --accent-foreground: oklch(0.978 0.01 261.8);
+  --destructive: oklch(0.65 0.2 25);
+  --destructive-foreground: oklch(0.978 0.01 261.8);
+
+  /* Lines */
+  --border: oklch(0.5 0.075 258 / 0.55);
+  --input: oklch(0.5 0.075 258 / 0.7);
+  --ring: oklch(0.841 0.056 260.2);
+  --rail: oklch(0.7 0.06 260 / 0.55);
+  --node: oklch(0.874 0.042 263);
+  --hex: oklch(0.72 0.05 260 / 0.45);
+  --overlay: oklch(0.16 0.04 258 / 0.82);
+
+  /* Code window */
+  --code: oklch(0.225 0.05 261.7);
+  --code-text: oklch(0.9 0.02 260);
+  --code-keyword: oklch(0.745 0.114 46.2);
+  --code-string: oklch(0.8 0.09 55);
+  --code-comment: oklch(0.66 0.04 260);
+  --window-red: oklch(0.66 0.19 25);
+  --window-dot: oklch(0.6 0.06 260);
+
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.239 0.051 258.3);
+  --sidebar-foreground: oklch(0.978 0.01 261.8);
+  --sidebar-primary: oklch(0.841 0.056 260.2);
+  --sidebar-primary-foreground: oklch(0.239 0.051 258.3);
+  --sidebar-accent: oklch(0.374 0.081 257.1);
+  --sidebar-accent-foreground: oklch(0.978 0.01 261.8);
+  --sidebar-border: oklch(0.5 0.075 258 / 0.55);
+  --sidebar-ring: oklch(0.841 0.056 260.2);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-anchor: none;
+  }
+
+  body {
+    background-color: var(--color-chrome);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+
+  section[id],
+  article[id] {
+    scroll-margin-top: 5.5rem;
+  }
+}
+
+/* Small uppercase label with a trailing rule, used above every section title. */
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+
+  &::after {
+    content: "";
+    display: block;
+    width: 2.75rem;
+    height: 1px;
+    background: var(--color-muted-foreground);
+  }
+}
+
+@utility section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+  font-size: 1.875rem;
+
+  @media (width >= 48rem) {
+    font-size: 2.25rem;
+  }
+}
+
+/* Smaller title used by the Education and About cards (original: text-2xl md:text-3xl). */
+@utility card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  font-size: 1.5rem;
+
+  @media (width >= 48rem) {
+    font-size: 1.875rem;
+  }
+}
+
+/*
+ * Course list scrolls with its native bar hidden; a custom track + thumb
+ * (rendered in the Education component) is always visible, also on phones
+ * where native scrollbars auto-hide. Page scrolling continues past the end.
+ */
+@utility scroll-custom {
+  overflow-y: auto;
+  overscroll-behavior: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility scroll-track {
+  background: color-mix(in oklab, var(--color-rail) 40%, transparent);
+  border-radius: 999px;
+}
+
+@utility scroll-thumb {
+  background: var(--color-node);
+  border-radius: 999px;
+}
+
+/* Fade at the bottom of the course list while more content sits below. */
+@utility scroll-fade-band {
+  background: linear-gradient(to bottom, transparent, var(--color-band));
+}
+
+/* Timeline node: filled dot with a soft halo. */
+@utility timeline-node {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: var(--color-node);
+  box-shadow:
+    0 0 0 3px color-mix(in oklab, var(--color-node) 28%, transparent),
+    0 0 0 6px color-mix(in oklab, var(--color-background) 80%, transparent);
+}
+
+/* Vertical rail that fades out at the bottom. */
+@utility timeline-rail-fade {
+  background: linear-gradient(
+    to bottom,
+    var(--color-rail) 0%,
+    var(--color-rail) 80%,
+    transparent 100%
+  );
+}
+
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 3px;
+  transition: background-size 0.25s ease;
+
+  &:hover {
+    background-size: 40% 1px;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-rise {
+  animation: rise-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
