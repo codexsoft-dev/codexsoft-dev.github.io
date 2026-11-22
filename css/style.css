@@ -4530,6 +4530,20 @@ body[data-scroll-locked] {
 }
 
 /*
+ * Desktop: the hero is clamp(600px, 50vw, 720px) tall and the frame sits on
+ * its bottom edge. The outline's top is placed midway between the header and
+ * the top of the head, so the header never cuts it:
+ *   head top    = 108.1% of the frame height above its bottom,
+ *   outline     = 120.5% of the frame height tall,
+ *   bottom      = (hero height + head top) / 2 - outline height.
+ */
+@media (width >= 64rem) {
+  .hero-portrait > svg {
+    bottom: calc(clamp(600px, 50vw, 720px) / 2 - 66.45%);
+  }
+}
+
+/*
  * Below desktop the frame's top margin keeps the outline's top 20px under the
  * text above it: the outline now pokes 37.5% of the frame's width above it.
  */
