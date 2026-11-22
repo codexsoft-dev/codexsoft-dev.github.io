@@ -4601,3 +4601,17 @@ body > .min-h-screen > main {
     overflow-y: auto;
   }
 }
+
+/* Legal pages: "LEGAL" eyebrow with the line before the text. */
+.eyebrow-line-first {
+  flex-direction: row-reverse;
+}
+
+/*
+ * Legal pages: the second "Back to home" link under the last box. Its gap to
+ * that box equals the visible gap between the top "Back to home" link and the
+ * "LEGAL" eyebrow (2.5rem margin + 8.5px the eyebrow sits lower in its line).
+ */
+.legal-backlink-bottom {
+  margin-top: calc(2.5rem + 8.5px);
+}
