@@ -4575,24 +4575,29 @@ body > .min-h-screen > main {
 }
 
 /*
- * Legal pages (body.legal-page): the footer always stays on the bottom edge
- * of the window. The page is exactly one window tall; header and footer keep
- * their natural height and only the content between them scrolls, so it can
- * never slide behind the footer, whatever height the footer has (it is taller
- * on phones).
+ * Legal pages (body.legal-page) on large screens only: the footer always stays
+ * on the bottom edge of the window. The page is exactly one window tall;
+ * header and footer keep their natural height and only the content between
+ * them scrolls, so it never slides behind the footer.
+ * Phones, tablets and short windows keep the normal page flow (footer after
+ * the content; at the bottom of the window only when the content is shorter,
+ * see "Sticky footer" above): there the footer is much taller and a pinned
+ * footer would leave almost no room for the text.
  */
-body.legal-page > .min-h-screen {
-  height: 100vh;
-  height: 100dvh;
-}
+@media (width >= 64rem) and (height >= 700px) {
+  body.legal-page > .min-h-screen {
+    height: 100vh;
+    height: 100dvh;
+  }
 
-body.legal-page > .min-h-screen > header,
-body.legal-page > .min-h-screen > footer {
-  flex-shrink: 0;
-}
+  body.legal-page > .min-h-screen > header,
+  body.legal-page > .min-h-screen > footer {
+    flex-shrink: 0;
+  }
 
-body.legal-page > .min-h-screen > main {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
+  body.legal-page > .min-h-screen > main {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
 }
