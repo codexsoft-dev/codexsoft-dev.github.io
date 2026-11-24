@@ -275,7 +275,11 @@
       if (prev.showAllCourses !== state.showAllCourses) {
         $$("[data-course-extra]").forEach(function (li) { show(li, state.showAllCourses); });
         coursesBtn.setAttribute("aria-expanded", state.showAllCourses ? "true" : "false");
-        coursesBtn.textContent = state.showAllCourses ? "Show Fewer Courses" : "Show All Courses";
+        var coursesLabel = $("[data-courses-label]", coursesBtn);
+        var coursesText = state.showAllCourses ? "Show Fewer Courses" : "Show All Courses";
+        if (coursesLabel) coursesLabel.textContent = coursesText; else coursesBtn.textContent = coursesText;
+        show($("[data-courses-icon-more]", coursesBtn), !state.showAllCourses);
+        show($("[data-courses-icon-less]", coursesBtn), state.showAllCourses);
         // When the list folds back to one course, start again from its top.
         if (!state.showAllCourses) list.scrollTop = 0;
         measure();
