@@ -1,0 +1,16 @@
+{
+  "name": "Marko Z. Petković — CODEX · SOFT",
+  "short_name": "CODEX · SOFT",
+  "description": "Go & Java backend engineer from Serbia — event-driven systems with Kafka for iGaming and fintech.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "minimal-ui",
+  "background_color": "#172d4e",
+  "theme_color": "#0f1f37",
+  "icons": [
+    { "src": "/images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/images/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

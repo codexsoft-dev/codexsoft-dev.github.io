@@ -1,0 +1,5 @@
+# CODEX · SOFT — https://codex-soft.dev/
+User-agent: *
+Allow: /
+
+Sitemap: https://codex-soft.dev/sitemap.xml
