@@ -344,7 +344,7 @@
   /* 7. Education: when the social links wrap (X and Instagram on one    */
   /*    row, LinkedIn below), the "Follow for Go tips & tricks!" note     */
   /*    ends, with its arrow, under the right end of the FIRST row. On    */
-  /*    one row the CSS places it (end of row / centred from 1024px).     */
+  /*    one row, or with the links stacked, the CSS places it.            */
   /* ------------------------------------------------------------------ */
   var eduSocials = $(".edu-socials");
   var eduFollow = $(".edu-follow");

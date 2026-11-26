@@ -4642,18 +4642,16 @@ body > .min-h-screen > main {
 }
 
 /*
- * Education: "Show All Courses" on its own row, the social links left-aligned
- * under it (same left edge as the button and the course card), and the
- * "Follow for Go tips & tricks!" note under them. The block is as wide as the
- * links, so the note lines up with them:
- *   - one column (640px-1023px): the note ends under the right end of the
- *     links row, the arrow's tip (small negative margin) under LinkedIn's end;
- *   - two columns (from 1024px): the note (text + arrow) is centred under
- *     the whole row.
- * The links stay on one row whenever they fit; if they wrap (X and
- * Instagram, LinkedIn below), js/script.js (section 7) ends the note under
- * the right end of the first row instead, arrow pointing up at it.
- * On phones (one link per row) the note stays centred on the column as before.
+ * Education, bottom of the courses column ("Show All Courses", the social
+ * links and the "Follow for Go tips & tricks!" note):
+ *   - phones (below 640px): one link per row, note centred (unchanged);
+ *   - 640px-719px: button alone, links in one row under it (left-aligned),
+ *     note ending under the end of the row, arrow pointing up at LinkedIn;
+ *     if the links wrap, js/script.js (section 7) ends it under the first row;
+ *   - 720px-1023px: button left, links on the same row pushed right (see
+ *     "One-column layout" below);
+ *   - from 1024px (two columns): button left, links stacked to its right
+ *     (see "Two-column layout" at the end).
  */
 @media (max-width: 39.99rem) {
   .edu-follow {
@@ -4671,26 +4669,54 @@ body > .min-h-screen > main {
     margin-right: -0.5rem;
   }
 }
-@media (min-width: 64rem) {
-  .edu-follow {
-    justify-content: center;
-    margin-right: 0;
-  }
-}
 
 /*
- * Two-column layout (from 1024px): the links follow right after the button
- * with the same 20px gap as between the course card and the button, instead
- * of being pushed to the bottom of the column. In the narrower part of this
- * range the links are slightly more compact so all three fit on one row
- * (from 1232px they fit at full size).
+ * One-column layout (720px-1023px), when "Show All Courses" and the three
+ * social links fit on one row: the button stays on the left and the links
+ * are pushed to the right, ending at the course card's right edge. The note
+ * sits under the links, starting a little left of the X link, with the arrow
+ * above its start, pointing up-right at the X link. Below 832px the links
+ * are more compact so they still fit beside the button (most compact below
+ * 784px, e.g. iPad Mini).
+ * Narrower one-column widths (640px-719px) keep the stacked layout above.
  */
-@media (min-width: 64rem) {
-  .edu-socials-block {
-    margin-top: 0;
+@media (min-width: 45rem) and (max-width: 63.99rem) {
+  .edu-bottom {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 1rem;
+    align-items: start;
+  }
+  .edu-bottom > .edu-list {
+    grid-column: 1 / -1;
+  }
+  .edu-bottom > .edu-courses-btn {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .edu-bottom > .edu-socials-block {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    margin-right: 1rem;
+    padding-left: 0;
+  }
+  .edu-follow {
+    position: relative;
+    justify-content: flex-start;
+    margin-top: 3.25rem;
+    margin-right: 0;
+    margin-left: -5rem;
+  }
+  .edu-follow > svg {
+    position: absolute;
+    left: 3.25rem;
+    bottom: 100%;
+    translate: none;
+    transform: rotate(20deg);
   }
 }
-@media (min-width: 64rem) and (max-width: 76.99rem) {
+@media (min-width: 45rem) and (max-width: 51.99rem) {
   .edu-socials {
     gap: 0.375rem;
   }
@@ -4705,7 +4731,7 @@ body > .min-h-screen > main {
     height: 1.125rem;
   }
 }
-@media (min-width: 64rem) and (max-width: 71.99rem) {
+@media (min-width: 45rem) and (max-width: 48.99rem) {
   .edu-socials > li > a {
     gap: 0.375rem;
     padding-inline: 0.5rem;
@@ -4714,5 +4740,51 @@ body > .min-h-screen > main {
   .edu-socials > li > a > svg:first-child {
     width: 1rem;
     height: 1rem;
+  }
+}
+
+/*
+ * Two-column layout (from 1024px): "Show All Courses" on the left and, to
+ * its right, the three social links stacked (one per row, equal width),
+ * ending at the course card's right edge. The note spans under both, from
+ * under the button to under the links, with the arrow at its right end
+ * pointing up at the LinkedIn link. The column is fixed in height (it
+ * matches the right column), so the course list row shrinks and scrolls.
+ */
+@media (min-width: 64rem) {
+  .edu-bottom {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: minmax(0, max-content) auto auto 1fr;
+    column-gap: 1rem;
+    align-items: start;
+  }
+  .edu-bottom > .edu-list {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-self: stretch;
+  }
+  .edu-bottom > .edu-courses-btn {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .edu-bottom > .edu-socials-block {
+    display: contents;
+  }
+  .edu-socials {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    margin-right: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .edu-follow {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    margin-right: calc(1.25rem + 4.5rem);
   }
 }
