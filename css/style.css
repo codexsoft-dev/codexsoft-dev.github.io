@@ -4527,9 +4527,23 @@ body[data-scroll-locked] {
   height: auto;
 }
 
-.hero-portrait > svg {
-  width: 92%;
-  bottom: 22%;
+/*
+ * CODEX · SOFT logo behind the portrait (images/logo-hero.svg, vector with a
+ * built-in soft blue glow). The SVG has 70 units of padding around the
+ * 991 × 1162 mark for the glow, so the image is 1131/991 of the mark's width.
+ * The mark keeps the old outline's visible width (87.85% of the frame) and
+ * top edge:
+ *   width  = 87.85% × 1131 / 991       = 100.3%
+ *   bottom = old bottom − 3.83% of the frame height (taller mark + padding).
+ */
+.hero-portrait > img.hero-logo {
+  left: 50%;
+  width: 100.3%;
+  bottom: 18.17%;
+  transform: translateX(-50%);
+  opacity: 0.3;
+  pointer-events: none;
+  user-select: none;
 }
 
 /*
@@ -4541,8 +4555,8 @@ body[data-scroll-locked] {
  *   bottom      = (hero height + head top) / 2 - outline height.
  */
 @media (width >= 64rem) {
-  .hero-portrait > svg {
-    bottom: calc(clamp(600px, 50vw, 720px) / 2 - 66.45%);
+  .hero-portrait > img.hero-logo {
+    bottom: calc(clamp(600px, 50vw, 720px) / 2 - 70.28%);
   }
 }
 
