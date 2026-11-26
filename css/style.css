@@ -4640,3 +4640,45 @@ body > .min-h-screen > main {
     padding-inline: clamp(0.5rem, calc((100vw - 272.2px) / 4), 1.75rem);
   }
 }
+
+/*
+ * Education: "Show All Courses" on its own row, the social links in one row
+ * under it (left edge aligned with the button and the course card), and the
+ * "Follow for Go tips & tricks!" note under them, ending at the right end of
+ * that row, with its arrow on the right pointing up at the row's end.
+ * In the two-column layout (from 1024px) the links wrap, left-aligned:
+ * X and Instagram on one row and LinkedIn under them (see below).
+ * The block is as wide as the links, so the note lines up with their end.
+ * On phones (one link per row) the note stays centred on the column as before.
+ */
+@media (max-width: 39.99rem) {
+  .edu-follow {
+    margin-left: -2rem;
+  }
+}
+@media (min-width: 40rem) {
+  .edu-socials-block {
+    width: fit-content;
+    max-width: 100%;
+  }
+  .edu-follow {
+    justify-content: flex-end;
+    padding-right: 0.25rem;
+  }
+}
+
+/*
+ * Two-column layout (from 1024px; the page is capped at max-w-site, so the
+ * Education column stays narrow on all desktop widths): X and Instagram side
+ * by side, LinkedIn alone under them, all left-aligned. The grid keeps the
+ * block only as wide as the first row, so the note ends under Instagram and
+ * its arrow points up at the links instead of into the empty space.
+ */
+@media (min-width: 64rem) {
+  .edu-socials {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    justify-items: start;
+  }
+}
