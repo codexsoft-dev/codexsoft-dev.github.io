@@ -7,6 +7,7 @@
  *   4. "Show All Skills" / "Show Fewer Skills"
  *   5. Courses list: custom scrollbar, "Show All Courses", About "show more..."
  *   6. Footer year, opening a #section link from another page
+ *   7. Education: "Follow for Go tips & tricks!" lined up with the links
  */
 (function () {
   "use strict";
@@ -337,5 +338,39 @@
   if (window.location.hash) {
     var target = document.getElementById(window.location.hash.slice(1));
     if (target) requestAnimationFrame(function () { setTimeout(function () { target.scrollIntoView(); }, 50); });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* 7. Education: when the social links wrap (X and Instagram on one    */
+  /*    row, LinkedIn below), the "Follow for Go tips & tricks!" note     */
+  /*    ends, with its arrow, under the right end of the FIRST row. On    */
+  /*    one row the CSS places it (end of row / centred from 1024px).     */
+  /* ------------------------------------------------------------------ */
+  var eduSocials = $(".edu-socials");
+  var eduFollow = $(".edu-follow");
+  if (eduSocials && eduFollow) {
+    var alignFollow = function () {
+      eduFollow.style.marginRight = "";
+      eduFollow.style.justifyContent = "";
+      // Phones: one link per row, the note stays centred (CSS).
+      if (getComputedStyle(eduSocials).flexDirection === "column") return;
+      var links = $$("a", eduSocials);
+      if (!links.length) return;
+      var firstTop = links[0].getBoundingClientRect().top;
+      var rowEnd = 0;
+      links.forEach(function (a) {
+        var r = a.getBoundingClientRect();
+        if (Math.abs(r.top - firstTop) < 2) rowEnd = Math.max(rowEnd, r.right);
+      });
+      var extra = eduSocials.getBoundingClientRect().right - rowEnd;
+      if (extra < 0.5) return; // all on one row
+      // The small negative offset puts the arrow's tip, not the edge of its box, under the row end.
+      eduFollow.style.justifyContent = "flex-end";
+      eduFollow.style.marginRight = "calc(-0.5rem + " + extra.toFixed(1) + "px)";
+    };
+    alignFollow();
+    if (window.ResizeObserver) new ResizeObserver(alignFollow).observe(eduSocials);
+    else window.addEventListener("resize", alignFollow);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(alignFollow);
   }
 })();
