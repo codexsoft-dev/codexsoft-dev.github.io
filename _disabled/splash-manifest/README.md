@@ -1,21 +1,24 @@
-# Disabled: loading splash + web app manifest
+# Disabled: loading splash (intro screen)
 
-This folder holds the loading splash (intro screen) and the web app manifest
-for the CODEX · SOFT site. They are **not used**: no page links to anything in
-here. Everything is kept so it can be switched back on later.
+This folder holds the loading splash (intro screen) for the CODEX · SOFT site.
+It is **not used**: no page links to anything in here. It is kept so it can be
+switched back on later.
 
-Disabled on 2026-11-27. The last commit where they were active is `9db414d`.
+The splash was disabled on 2026-11-27. The last commit where it was active is
+`9db414d`.
+
+**The web app manifest and its icons are active again** (since 2026-11-27).
+They now live at the site root: `site.webmanifest` and `images/manifest/`
+(`icon-192/512/1024.png` on flat navy `#0f1f37`,
+`icon-maskable-192/512/1024.png` on a navy gradient, `apple-touch-icon.png`). Their `<link>` tags are
+already in the `<head>` of `index.html`, `privacy.html` and `terms.html`, so
+only the splash needs reactivating.
 
 > GitHub Pages still serves this folder if someone knows the URL, so
 > `robots.txt` asks search engines not to crawl `/_disabled/`.
 
 ## Contents
 
-- `site.webmanifest`: web app manifest (`display: standalone`,
-  `background_color #000b23`, `theme_color #0f1f37`, icons below).
-- `images/manifest/icon-192.png`, `icon-512.png`: app icons, transparent background.
-- `images/manifest/icon-maskable-512.png`: maskable icon on dark navy.
-- `images/manifest/apple-touch-icon.png`: 180×180 iOS home-screen icon.
 - `images/manifest/splash.webp`, `splash.jpg`: the 720×1280 splash image.
 
 ## How the splash worked
@@ -37,20 +40,20 @@ Disabled on 2026-11-27. The last commit where they were active is `9db414d`.
 
 ## How to reactivate
 
-1. Move the files back:
-   - `_disabled/splash-manifest/site.webmanifest` to `site.webmanifest`
-     (site root)
-   - `_disabled/splash-manifest/images/manifest/` to `images/manifest/`
-2. In `index.html`, replace
-   `<style>html{background-color:#0f1f37}</style>` in `<head>` (just before
-   the Google Fonts `preconnect` link) with snippet **A**.
+1. Move `_disabled/splash-manifest/images/manifest/splash.webp` and
+   `splash.jpg` to `images/manifest/` (next to the icons).
+2. In `index.html`, paste snippet **A** in `<head>` just before
+   `<style>html{background-color:#0f1f37}</style>`, **without** its first
+   two lines. The manifest and apple-touch-icon links are already there.
 3. In `index.html`, paste snippet **B** right after `<body>`.
-4. In `privacy.html` and `terms.html`, paste snippet **C** just before
-   `<style>html{background-color:#0f1f37}</style>` in `<head>`.
+4. `privacy.html` and `terms.html` need nothing (they never had the splash).
+   Snippet **C** is already active.
 5. Remove the `/_disabled/` line from `robots.txt` if nothing else is left
    in this folder.
-6. On a phone, remove the old home-screen shortcut, clear the site data and
-   add it again, because the manifest is cached.
+6. Optional: for a seamless start, set `background_color` in
+   `site.webmanifest` to `#000b23` (the splash image's edge colour); it is
+   currently `#0f1f37`. On a phone, remove the installed app, clear the site
+   data and install again, because the manifest is cached.
 
 ### A: `index.html` `<head>` (manifest, icon, preload, splash CSS)
 
@@ -106,7 +109,7 @@ Disabled on 2026-11-27. The last commit where they were active is `9db414d`.
   </script>
 ```
 
-### C: `privacy.html` / `terms.html` `<head>`
+### C: `privacy.html` / `terms.html` `<head>` (already active, for reference)
 
 ```html
   <link rel="manifest" href="site.webmanifest">
