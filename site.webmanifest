@@ -6,8 +6,7 @@
   "lang": "en",
   "start_url": "./",
   "scope": "./",
-  "display": "standalone",
-  "orientation": "any",
+  "display": "browser",
   "background_color": "#000b23",
   "theme_color": "#0f1f37",
   "icons": [
