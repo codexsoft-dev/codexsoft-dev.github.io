@@ -4528,7 +4528,7 @@ body[data-scroll-locked] {
 }
 
 /*
- * CODEX · SOFT logo behind the portrait (images/logo-hero.svg, vector with a
+ * CODEX · SOFT logo behind the portrait (images/brand/logo-hero.svg, vector with a
  * built-in soft blue glow). The SVG has 70 units of padding around the
  * 991 × 1162 mark for the glow, so the image is 1131/991 of the mark's width.
  * The mark keeps the old outline's visible width (87.85% of the frame) and

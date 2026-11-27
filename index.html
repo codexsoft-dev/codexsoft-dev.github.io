@@ -12,7 +12,7 @@
   <meta property="og:description" content="Portfolio of Marko Z. Petković, a Go and Java backend engineer in Serbia. iGaming and fintech experience, plus free courses such as GoPath and Cup 'o Go.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://codexsoft-dev.github.io/">
-  <meta property="og:image" content="https://codexsoft-dev.github.io/images/og-image.jpg?v=20261127-1">
+  <meta property="og:image" content="https://codexsoft-dev.github.io/images/brand/og-image.jpg?v=20261127-2">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -21,22 +21,63 @@
   <meta name="twitter:creator" content="@go_evangelist">
   <meta name="twitter:title" content="Marko Z. Petković — Go &amp; Java Backend Engineer | CODEX · SOFT">
   <meta name="twitter:description" content="Portfolio of Marko Z. Petković, a Go and Java backend engineer in Serbia. iGaming and fintech experience, plus free courses such as GoPath and Cup 'o Go.">
-  <meta name="twitter:image" content="https://codexsoft-dev.github.io/images/og-image.jpg?v=20261127-1">
+  <meta name="twitter:image" content="https://codexsoft-dev.github.io/images/brand/og-image.jpg?v=20261127-2">
   <meta name="twitter:image:alt" content="Marko Z. Petković — Backend Software Engineer, Founder @ CODEX · SOFT">
   <link rel="canonical" href="https://codexsoft-dev.github.io/">
-  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="images/favicon.png" type="image/png" sizes="64x64">
+  <link rel="icon" href="images/brand/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="images/brand/favicon.png" type="image/png" sizes="64x64">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="images/manifest/apple-touch-icon.png" sizes="180x180">
+  <link rel="preload" as="image" href="images/manifest/splash.webp" type="image/webp" fetchpriority="high">
+  <style id="splash-css">
+    html{background-color:#0f1f37}
+    .splash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;overflow:hidden;background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAACACAIAAABFm5SjAAAAeUlEQVR42n2QwRXDMAxC+WzQUbr/bqaH2FLiJD3wJGMskKXP19KwEiuzasz+ANLk01WxouqTGMmAVfp1r+JGRnO7JidtvZvzkFl9YT+/cXJ45heMDZ5e9CyOGuFcMmFov5z3rH13n/zNcMsPzuUP2DSd733/pXnU/QC22DQ2xqnzlAAAAABJRU5ErkJggg==") left top/50.5% 100% no-repeat,url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAACACAIAAABFm5SjAAAAh0lEQVR42n2RyxEDMQhDn5QC0kb6L3CVA9iLNzM5MAjxtczr/TGSQQasheXC7SUXZvI2O3fXwNk746qrHfcuWb0f0bfIEsV1TeHTBM7BpXxSfGb8D8ek+rN9un/Oap78xnPezPU8dt3jtrbqu5w2suIYrv1H63/cei69pnaArzV/aZfW6n7nF7I1XUpK7EXfAAAAAElFTkSuQmCC") right top/50.5% 100% no-repeat,#000b23;transition:opacity .55s ease,visibility .55s ease;animation:splash-out .55s ease 2.6s forwards}
+    .splash.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .splash picture{display:contents}
+    .splash__img{display:block;flex:none;max-width:none;width:auto;aspect-ratio:720/1280;height:min(100vh,calc(100vw * 1280 / 640));-webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent),linear-gradient(to bottom,transparent,#000 5%,#000 95%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent),linear-gradient(to bottom,transparent,#000 5%,#000 95%,transparent);mask-composite:intersect;transform:translateX(-2%);animation:splash-in .6s ease both}
+    @supports (height:100dvh){.splash__img{height:min(100dvh,calc(100vw * 1280 / 640))}}
+    @keyframes splash-in{from{opacity:0;transform:translateX(-2%) scale(.985)}to{opacity:1;transform:translateX(-2%)}}
+    @keyframes splash-out{to{opacity:0;visibility:hidden;pointer-events:none}}
+    @media (prefers-reduced-motion:reduce){.splash{transition:none}.splash__img{animation:none}}
+  </style>
+  <noscript><style>.splash{display:none}</style></noscript>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;family=JetBrains+Mono:ital,wght@0,400;1,400&amp;family=Manrope:wght@400;500;600;700&amp;family=Outfit:wght@500;600;700&amp;display=swap">
-  <link rel="stylesheet" href="css/style.css?v=20261127-1">
+  <link rel="stylesheet" href="css/style.css?v=20261127-2">
 </head>
 <body>
+  <div class="splash" id="splash" aria-hidden="true">
+    <picture>
+      <source srcset="images/manifest/splash.webp" type="image/webp">
+      <img class="splash__img" src="images/manifest/splash.jpg" alt="" width="720" height="1280" fetchpriority="high" decoding="async">
+    </picture>
+  </div>
+  <script>
+    (function () {
+      var s = document.getElementById('splash');
+      if (!s) return;
+      var t0 = Date.now(), done = false, seen = false;
+      try { seen = sessionStorage.getItem('splashSeen') === '1'; sessionStorage.setItem('splashSeen', '1'); } catch (e) {}
+      var minShow = seen ? 0 : 600;
+      function hide() {
+        if (done) return;
+        done = true;
+        setTimeout(function () {
+          s.classList.add('is-hidden');
+          setTimeout(function () { if (s.parentNode) s.parentNode.removeChild(s); }, 700);
+        }, Math.max(0, minShow - (Date.now() - t0)));
+      }
+      if (document.readyState === 'complete') hide();
+      else window.addEventListener('load', hide);
+      setTimeout(hide, 2500);
+    })();
+  </script>
   <div class="min-h-screen bg-background">
     <header data-site-header="true" class="sticky top-0 z-40 border-b border-border/40 bg-chrome/95 backdrop-blur">
       <div class="mx-auto flex h-16 max-w-site items-center justify-between gap-6 px-6 lg:h-[4.5rem]">
         <a href="#home" class="flex min-w-0 items-center gap-3">
-          <img alt="" aria-hidden="true" width="192" height="192" class="size-8 shrink-0 object-contain" src="images/logo.svg">
+          <img alt="" aria-hidden="true" width="192" height="192" class="size-8 shrink-0 object-contain" src="images/brand/logo.svg">
           <span class="font-display font-bold tracking-wide whitespace-nowrap text-xl">CODEX <span class="text-primary">·</span> <span class="text-primary">SOFT</span></span>
         </a>
         <nav class="hidden items-center gap-9 lg:flex" aria-label="Primary">
@@ -89,8 +130,8 @@
             </div>
           </div></div>
           <div class="hero-portrait relative ml-auto mt-[calc(1.125rem+16.6%)] w-[90%] max-w-[520px] sm:mx-auto sm:mt-[calc(1.125rem+96px)] md:col-span-2 lg:absolute lg:bottom-0 lg:left-[38%] lg:mt-0 lg:w-[48%] lg:max-w-none lg:-translate-x-1/2">
-            <img alt="" aria-hidden="true" width="1131" height="1302" decoding="async" class="hero-logo" src="images/logo-hero.svg">
-            <img alt="Portrait of Marko Z. Petković, Go and Java backend engineer" width="1274" height="1124" fetchpriority="high" class="relative block h-auto w-full" src="images/hero-portrait.png">
+            <img alt="" aria-hidden="true" width="1131" height="1302" decoding="async" class="hero-logo" src="images/brand/logo-hero.svg">
+            <img alt="Portrait of Marko Z. Petković, Go and Java backend engineer" width="1274" height="1124" fetchpriority="high" class="relative block h-auto w-full" src="images/hero/hero-portrait.png">
           </div>
         </div>
         <div class="border-t border-border/60 lg:hidden">
@@ -607,7 +648,7 @@
         <div class="flex flex-col items-center gap-6 py-10 text-center md:flex-row md:justify-between md:text-left">
           <div class="flex flex-col items-center gap-3 md:flex-row">
             <div class="flex items-center gap-3">
-              <img alt="" aria-hidden="true" width="192" height="192" class="size-9 shrink-0 object-contain" src="images/logo.svg">
+              <img alt="" aria-hidden="true" width="192" height="192" class="size-9 shrink-0 object-contain" src="images/brand/logo.svg">
               <span class="font-display font-bold tracking-wide whitespace-nowrap text-xl">CODEX <span class="text-primary">·</span> <span class="text-primary">SOFT</span></span>
             </div>
           </div>
