@@ -264,12 +264,7 @@
       window.addEventListener("pointerup", up);
     });
 
-    /*
-     * "show more..." on desktop also opens every course when they are not shown
-     * yet, so the taller About card leaves no empty space under Education;
-     * "show less..." folds them back only if "show more..." opened them.
-     * On tablets and phones the columns are stacked, so About expands alone.
-     */
+    /* "show more..." / "show less..." only expand or fold the About text; the courses list is independent. */
     var state = { aboutExpanded: false, showAllCourses: false, coursesOpenedByAbout: false };
 
     var render = function (prev) {
@@ -297,15 +292,8 @@
       switch (action) {
         case "showAllCourses": s.showAllCourses = true; s.coursesOpenedByAbout = false; break;
         case "hideAllCourses": s.showAllCourses = false; s.coursesOpenedByAbout = false; break;
-        case "aboutMore":
-          if (prev.showAllCourses) s.aboutExpanded = true;
-          else s = { aboutExpanded: true, showAllCourses: true, coursesOpenedByAbout: true };
-          break;
-        case "aboutMoreOnly": s.aboutExpanded = true; break;
-        case "aboutLess":
-          if (prev.coursesOpenedByAbout) s = { aboutExpanded: false, showAllCourses: false, coursesOpenedByAbout: false };
-          else s.aboutExpanded = false;
-          break;
+        case "aboutMore": s.aboutExpanded = true; break;
+        case "aboutLess": s.aboutExpanded = false; break;
       }
       state = s;
       render(prev);
@@ -325,7 +313,7 @@
     keepFocus(aboutMore);
     keepFocus(aboutLess);
     aboutMore.addEventListener("click", function () {
-      dispatch(window.matchMedia("(min-width: 1024px)").matches ? "aboutMore" : "aboutMoreOnly");
+      dispatch("aboutMore");
     });
     aboutLess.addEventListener("click", function () { dispatch("aboutLess"); });
   }
