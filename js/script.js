@@ -310,7 +310,7 @@
       var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reduce) { list.scrollTop = courseScrollTarget(second); return; }
       cancelCourseScroll();
-      var duration = 500;
+      var duration = 1000;
       var start = performance.now();
       var step = function (now) {
         var t = Math.min(1, (now - start) / duration);
