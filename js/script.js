@@ -288,6 +288,46 @@
     /* "show more..." / "show less..." only expand or fold the About text; the courses list is independent. */
     var state = { aboutExpanded: false, showAllCourses: false, coursesOpenedByAbout: false };
 
+    var courseScrollFrame = 0;
+    var cancelCourseScroll = function () {
+      if (courseScrollFrame) {
+        cancelAnimationFrame(courseScrollFrame);
+        courseScrollFrame = 0;
+      }
+    };
+    var easeInOutCubic = function (t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+    var courseScrollTarget = function (second) {
+      return list.scrollTop + second.getBoundingClientRect().top - list.getBoundingClientRect().top - list.clientTop;
+    };
+    var scrollCoursesToSecond = function () {
+      var second = list.children[1];
+      if (!second) return;
+      var from = list.scrollTop;
+      var to = courseScrollTarget(second);
+      if (Math.abs(to - from) < 1) return;
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) { list.scrollTop = courseScrollTarget(second); return; }
+      cancelCourseScroll();
+      var duration = 500;
+      var start = performance.now();
+      var step = function (now) {
+        var t = Math.min(1, (now - start) / duration);
+        var dest = courseScrollTarget(second);
+        list.scrollTop = from + (dest - from) * easeInOutCubic(t);
+        if (t < 1) courseScrollFrame = requestAnimationFrame(step);
+        else {
+          list.scrollTop = courseScrollTarget(second);
+          courseScrollFrame = 0;
+        }
+      };
+      courseScrollFrame = requestAnimationFrame(step);
+    };
+    list.addEventListener("wheel", cancelCourseScroll, { passive: true });
+    list.addEventListener("touchstart", cancelCourseScroll, { passive: true });
+    list.addEventListener("pointerdown", cancelCourseScroll);
+
     var render = function (prev) {
       if (prev.showAllCourses !== state.showAllCourses) {
         applyCourses();
@@ -297,9 +337,19 @@
         if (coursesLabel) coursesLabel.textContent = coursesText; else coursesBtn.textContent = coursesText;
         show($("[data-courses-icon-more]", coursesBtn), !state.showAllCourses);
         show($("[data-courses-icon-less]", coursesBtn), state.showAllCourses);
-        // When the list folds back to one course, start again from its top.
-        if (!state.showAllCourses) list.scrollTop = 0;
+        // When the list folds back to one course, jump to its top (instant).
+        if (!state.showAllCourses) {
+          cancelCourseScroll();
+          list.scrollTop = 0;
+        }
         measure();
+        // On phones and tablets (below 1024px), "Show All Courses" scrolls the
+        // course window — not the page — so the second course is at the top.
+        if (state.showAllCourses && !(deskMq && deskMq.matches)) {
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () { scrollCoursesToSecond(); });
+          });
+        }
       }
       if (prev.aboutExpanded !== state.aboutExpanded) {
         show(aboutMore, !state.aboutExpanded);
