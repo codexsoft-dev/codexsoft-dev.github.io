@@ -8,6 +8,7 @@
  *   5. Courses list: custom scrollbar, "Show All Courses", About "show more..."
  *   6. Footer year, opening a #section link from another page
  *   7. Education: "Follow for Go tips & tricks!" lined up with the links
+ *   8. profile.go card: scale the code font so the longest line fills the width
  */
 (function () {
   "use strict";
@@ -382,5 +383,56 @@
     if (window.ResizeObserver) new ResizeObserver(alignFollow).observe(eduSocials);
     else window.addEventListener("resize", alignFollow);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(alignFollow);
+  }
+
+
+  /* ------------------------------------------------------------------ */
+  /* 8. profile.go: scale the font so the longest line fills the card,   */
+  /*    leaving a small right margin (~ the left padding, up to 16px).   */
+  /*    Min 10px (horizontal scroll is the fallback), max 32px so the    */
+  /*    line can still fill a full-width tablet card.                    */
+  /* ------------------------------------------------------------------ */
+  var profilePre = $(".profile-ide pre");
+  if (profilePre) {
+    var PROFILE_FONT_REF = 12;
+    var PROFILE_FONT_MIN = 10;
+    var PROFILE_FONT_MAX = 32;
+    var fittingCode = false;
+    var fitProfileCode = function () {
+      if (fittingCode) return;
+      fittingCode = true;
+      var cs = getComputedStyle(profilePre);
+      var code = $("code", profilePre) || profilePre;
+      var lines = (code.textContent || "").split("\n");
+      var longest = "";
+      lines.forEach(function (line) { if (line.length > longest.length) longest = line; });
+      var probe = document.createElement("span");
+      probe.style.cssText = "position:absolute;left:-9999px;top:0;visibility:hidden;white-space:pre;";
+      probe.style.fontFamily = cs.fontFamily;
+      probe.style.fontWeight = cs.fontWeight;
+      probe.style.fontStyle = cs.fontStyle;
+      probe.style.letterSpacing = cs.letterSpacing;
+      probe.style.fontSize = PROFILE_FONT_REF + "px";
+      probe.textContent = longest || " ";
+      document.body.appendChild(probe);
+      var measured = probe.getBoundingClientRect().width;
+      document.body.removeChild(probe);
+      var padL = parseFloat(cs.paddingLeft) || 0;
+      var padR = parseFloat(cs.paddingRight) || 0;
+      var inner = profilePre.clientWidth - padL - padR;
+      var margin = Math.min(padL || 16, 16);
+      var available = Math.max(0, inner - margin);
+      var size = measured > 0 ? PROFILE_FONT_REF * available / measured : PROFILE_FONT_REF;
+      if (size < PROFILE_FONT_MIN) size = PROFILE_FONT_MIN;
+      if (size > PROFILE_FONT_MAX) size = PROFILE_FONT_MAX;
+      profilePre.style.fontSize = size.toFixed(2) + "px";
+      profilePre.style.lineHeight = "1.7";
+      fittingCode = false;
+    };
+    fitProfileCode();
+    if (window.ResizeObserver) new ResizeObserver(fitProfileCode).observe(profilePre);
+    window.addEventListener("resize", fitProfileCode);
+    window.addEventListener("load", fitProfileCode);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitProfileCode);
   }
 })();
