@@ -4844,3 +4844,35 @@ main:focus {
     scroll-behavior: auto !important;
   }
 }
+
+/* ------------------------------------------------------------------------
+ * Education & Content, desktop (from 1024px): the section spans from the top
+ * of the profile.go card to the bottom of "About me". The course window takes
+ * all the height left over by the buttons/links below it (js/script.js, section
+ * 5, reveals as many courses as it takes to fill it and follows About me when
+ * it grows or folds).
+ * ---------------------------------------------------------------------- */
+@media (min-width: 64rem) {
+  .profile-col {
+    padding-top: 0;
+  }
+  .edu-bottom {
+    grid-template-rows: minmax(0, 1fr) auto auto;
+  }
+  .edu-list > [data-courses-list] {
+    flex: 1 1 0%;
+  }
+}
+
+/* profile.go IDE card: allow horizontal scroll instead of clipping long lines
+ * (safety net on very narrow screens). Tighter pre padding below 640px so the
+ * longest remaining line still fits at 360px. */
+.profile-ide {
+  overflow-y: hidden;
+}
+@media (max-width: 39.99rem) {
+  .profile-ide pre {
+    padding-left: 0.875rem;
+    padding-right: 0.875rem;
+  }
+}

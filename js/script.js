@@ -188,7 +188,7 @@
         statusEl.textContent = "Please fill in name, email and message.";
         return;
       }
-      statusEl.textContent = "Thanks — we will get back to you shortly.";
+      statusEl.textContent = "Thanks — I'll get back to you shortly.";
       form.reset();
     });
   }
@@ -243,12 +243,32 @@
       fadeBand.classList.toggle("opacity-0", !more);
     };
     list.addEventListener("scroll", measure);
+    /* Courses beyond the first are hidden until "Show All Courses". On desktop (two columns) the
+       course window fills the height of the section, which matches profile.go and About me, so
+       by default as many courses are revealed as it takes to fill that window. */
+    var extras = $$("[data-course-extra]");
+    var deskMq = window.matchMedia ? window.matchMedia("(min-width: 64rem)") : null;
+    var fitting = false;
+    var applyCourses = function () {
+      if (fitting) return;
+      fitting = true;
+      var all = typeof state !== "undefined" && state.showAllCourses;
+      extras.forEach(function (li) { show(li, all); });
+      if (!all && deskMq && deskMq.matches) {
+        for (var i = 0; i < extras.length && list.scrollHeight <= list.clientHeight + 1; i++) show(extras[i], true);
+      }
+      fitting = false;
+    };
+    var relayout = function () { applyCourses(); measure(); };
     if (window.ResizeObserver) {
-      var ro = new ResizeObserver(measure);
+      var ro = new ResizeObserver(relayout);
       ro.observe(list);
       Array.prototype.forEach.call(list.children, function (c) { ro.observe(c); });
     }
-    measure();
+    if (deskMq && deskMq.addEventListener) deskMq.addEventListener("change", relayout);
+    window.addEventListener("resize", relayout);
+    window.addEventListener("load", relayout);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
 
     // Dragging the thumb scrolls the list.
     thumb.addEventListener("pointerdown", function (event) {
@@ -269,7 +289,7 @@
 
     var render = function (prev) {
       if (prev.showAllCourses !== state.showAllCourses) {
-        $$("[data-course-extra]").forEach(function (li) { show(li, state.showAllCourses); });
+        applyCourses();
         coursesBtn.setAttribute("aria-expanded", state.showAllCourses ? "true" : "false");
         var coursesLabel = $("[data-courses-label]", coursesBtn);
         var coursesText = state.showAllCourses ? "Show Fewer Courses" : "Show All Courses";
@@ -309,6 +329,8 @@
         if (coursesBtn.getBoundingClientRect().top < 80) coursesBtn.scrollIntoView({ block: "center" });
       });
     });
+
+    relayout();
 
     keepFocus(aboutMore);
     keepFocus(aboutLess);
