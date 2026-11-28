@@ -1,2 +1,5 @@
+# Preview build: kept out of search results with <meta name="robots" content="noindex, nofollow">.
+# Crawling stays allowed on purpose, so that crawlers can actually see the noindex.
 User-agent: *
+Allow: /
 Disallow: /_disabled/

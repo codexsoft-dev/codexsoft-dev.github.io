@@ -4518,7 +4518,7 @@ body[data-scroll-locked] {
   clip-path: inset(-100vh -100vw 0 -100vw);
 }
 
-.hero-portrait > img {
+.hero-portrait img {
   position: absolute;
   bottom: 0;
   left: -4%;
@@ -4800,5 +4800,47 @@ body > .min-h-screen > main {
     justify-content: flex-end;
     margin-top: 1rem;
     margin-right: calc(1.25rem + 4.5rem);
+  }
+}
+
+/* ------------------------------------------------------------------------
+ * SEO / accessibility additions
+ * ---------------------------------------------------------------------- */
+/* <picture> must not create a box of its own: the portrait is positioned against the frame */
+.hero-portrait picture {
+  display: contents;
+}
+.skip-link {
+  position: fixed;
+  left: 0.75rem;
+  top: -4rem;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  border-radius: 0.125rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 0.75rem;
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+main:focus {
+  outline: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
