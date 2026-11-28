@@ -29,8 +29,8 @@
   <meta property="og:title" content="Marko Z. Petković — Go &amp; Java Backend Engineer | CODEX · SOFT">
   <meta property="og:description" content="Marko Z. Petković, Go (Golang) and Java backend engineer from Niš, Serbia. Kafka, REST/gRPC and SQL for iGaming and fintech. Founder of CODEX · SOFT.">
   <meta property="og:url" content="https://codexsoft-dev.github.io/">
-  <meta property="og:image" content="https://codexsoft-dev.github.io/images/brand/og-image.jpg">
-  <meta property="og:image:secure_url" content="https://codexsoft-dev.github.io/images/brand/og-image.jpg">
+  <meta property="og:image" content="https://codexsoft-dev.github.io/images/brand/og-image.jpg?v=20261128-1">
+  <meta property="og:image:secure_url" content="https://codexsoft-dev.github.io/images/brand/og-image.jpg?v=20261128-1">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -43,7 +43,7 @@
   <meta name="twitter:creator" content="@go_evangelist">
   <meta name="twitter:title" content="Marko Z. Petković — Go &amp; Java Backend Engineer | CODEX · SOFT">
   <meta name="twitter:description" content="Marko Z. Petković, Go (Golang) and Java backend engineer from Niš, Serbia. Kafka, REST/gRPC and SQL for iGaming and fintech. Founder of CODEX · SOFT.">
-  <meta name="twitter:image" content="https://codexsoft-dev.github.io/images/brand/og-image.jpg">
+  <meta name="twitter:image" content="https://codexsoft-dev.github.io/images/brand/og-image.jpg?v=20261128-1">
   <meta name="twitter:image:alt" content="Marko Z. Petković — Backend Software Engineer, Founder @ CODEX · SOFT">
   <script type="application/ld+json">
   {
@@ -130,7 +130,6 @@
           "Marko Z. Petkovic"
         ],
         "url": "https://codexsoft-dev.github.io/",
-        "email": "mailto:codex7soft@gmail.com",
         "image": {
           "@type": "ImageObject",
           "url": "https://codexsoft-dev.github.io/images/hero/marko-petkovic-portrait.png",
@@ -176,16 +175,7 @@
         ],
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "Niš",
           "addressCountry": "RS"
-        },
-        "homeLocation": {
-          "@type": "City",
-          "name": "Niš",
-          "containedInPlace": {
-            "@type": "Country",
-            "name": "Serbia"
-          }
         },
         "alumniOf": {
           "@type": "CollegeOrUniversity",
@@ -230,7 +220,7 @@
           "CODEX·SOFT",
           "Codex Soft"
         ],
-        "description": "Independent Software Engineering — backend development, software engineering and DevOps for iGaming and fintech, by Marko Z. Petković.",
+        "description": "Independent Software Engineering — backend development and software engineering for iGaming and fintech, by Marko Z. Petković.",
         "url": "https://codexsoft-dev.github.io/",
         "logo": {
           "@type": "ImageObject",
@@ -243,7 +233,6 @@
         "image": {
           "@id": "https://codexsoft-dev.github.io/#primaryimage"
         },
-        "email": "codex7soft@gmail.com",
         "founder": {
           "@id": "https://codexsoft-dev.github.io/#person"
         },
@@ -258,7 +247,6 @@
         "knowsAbout": [
           "Backend Development",
           "Software Engineering",
-          "DevOps",
           "iGaming",
           "Fintech",
           "Go (Golang)",
@@ -266,15 +254,6 @@
           "Apache Kafka",
           "Event-driven architecture"
         ],
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "contactType": "sales",
-          "email": "codex7soft@gmail.com",
-          "availableLanguage": [
-            "English",
-            "Serbian"
-          ]
-        },
         "sameAs": [
           "https://www.linkedin.com/in/goevangelist",
           "https://github.com/golang-evangelist"
@@ -689,7 +668,7 @@
                   <ul class="mt-3 space-y-1.5 text-sm leading-relaxed text-muted-foreground">
                     <li class="flex gap-2.5">
                       <span aria-hidden="true" class="mt-[0.55rem] size-1 shrink-0 rounded-full bg-node"></span>
-                      <span><strong class="font-semibold text-foreground">Singidunum University, Belgrade</strong><span> — Faculty of Informatics and Computing, 2009 – 2015</span></span>
+                      <span><strong class="font-semibold text-foreground">Singidunum University, Belgrade</strong><span> — Faculty of Informatics and Computing</span></span>
                     </li>
                     <li class="flex gap-2.5">
                       <span aria-hidden="true" class="mt-[0.55rem] size-1 shrink-0 rounded-full bg-node"></span>
@@ -969,17 +948,41 @@
 
 <span class="text-code-keyword">type</span> <span class="text-muted-foreground">Engineer</span> <span class="text-code-keyword">struct</span> {
   Name  <span class="text-muted-foreground">string</span>
-  Stack <span class="text-muted-foreground">[]string</span>
+  Stack <span class="text-muted-foreground">map</span>[<span class="text-muted-foreground">string</span>][]<span class="text-muted-foreground">string</span>
   Base  <span class="text-muted-foreground">string</span>
+}
+
+<span class="text-code-keyword">type</span> <span class="text-muted-foreground">Solution</span> <span class="text-code-keyword">struct</span> {
+  Quality     <span class="text-muted-foreground">string</span>
+  Reliability <span class="text-muted-foreground">string</span>
+  Scalability <span class="text-muted-foreground">string</span>
+  Security    <span class="text-muted-foreground">string</span>
 }
 
 <span class="text-code-keyword">func</span> Marko() <span class="text-muted-foreground">Engineer</span> {
   <span class="text-code-keyword">return</span> <span class="text-muted-foreground">Engineer</span>{
-    <span class="text-code-string">"Marko Z. Petković"</span>,
-    []<span class="text-muted-foreground">string</span>{<span class="text-code-string">"Go"</span>, <span class="text-code-string">"Java"</span>, <span class="text-code-string">"SQL"</span>},
-    <span class="text-code-string">"Niš, Serbia"</span>,
+    Name:  <span class="text-code-string">"Marko Z. Petković"</span>,
+    Stack: <span class="text-muted-foreground">map</span>[<span class="text-muted-foreground">string</span>][]<span class="text-muted-foreground">string</span>{
+      <span class="text-code-string">"primary"</span>: {
+        <span class="text-code-string">"Go"</span>, <span class="text-code-string">"Java"</span>, <span class="text-code-string">"PostgreSQL"</span>, <span class="text-code-string">"MySQL"</span>,
+        <span class="text-code-string">"REST API"</span>, <span class="text-code-string">"gRPC"</span>, <span class="text-code-string">"Apache Kafka"</span>, <span class="text-code-string">"Docker"</span>,
+      },
+      <span class="text-code-string">"secondary"</span>: {
+        <span class="text-code-string">"Prometheus"</span>, <span class="text-code-string">"Grafana"</span>, <span class="text-code-string">"RabbitMQ"</span>, <span class="text-code-string">"MongoDB"</span>,
+        <span class="text-code-string">"MariaDB"</span>, <span class="text-code-string">"Redis"</span>, <span class="text-code-string">"Kubernetes"</span>, <span class="text-code-string">"Terraform"</span>,
+        <span class="text-code-string">"GCP"</span>, <span class="text-code-string">"AWS"</span>, <span class="text-code-string">"Azure"</span>,
+      },
+    },
+    Base:  <span class="text-code-string">"Niš, Serbia"</span>,
   }
-}</code></pre>
+}
+
+<span class="text-code-keyword">func</span> (<span class="text-muted-foreground">Solution</span>) Deliver() <span class="text-muted-foreground">string</span> {
+  <span class="text-code-keyword">return</span> <span class="text-code-string">"Impactful Software Solutions"</span>
+}
+
+<span class="italic text-code-comment">// We don't just write code.</span>
+<span class="italic text-code-comment">// We build digital value.</span></code></pre>
             </div>
             <article id="about" class="bg-card p-6 sm:p-8"><p class="eyebrow">About</p><h2 class="card-title mt-3">About me</h2><div class="mt-4 space-y-4 text-base leading-relaxed text-muted-foreground" data-reveal-host>
               <p>I’m a Backend Software Engineer based in Niš, Serbia (open to remote work), designing and building backend services and distributed systems in Go (Golang) and Java. In iGaming, I’ve worked on online casino and sportsbook platforms in Go and on a gaming management system in Java. I work with REST APIs, gRPC, SQL databases, Kafka, and Docker.</p>
@@ -1055,7 +1058,7 @@
               </a>
             </li>
             <li>
-              <a href="mailto:codex7soft@gmail.com" aria-label="Email CODEX · SOFT: codex7soft@gmail.com" class="grid size-9 place-items-center rounded-sm border border-border text-foreground/90 transition-colors hover:border-primary hover:text-primary">
+              <a href="mailto:codex7soft@gmail.com" aria-label="Email CODEX · SOFT" class="grid size-9 place-items-center rounded-sm border border-border text-foreground/90 transition-colors hover:border-primary hover:text-primary">
                 <svg class="size-3.5" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 6.5h16v11H4v-11zm0 0 8 6.5L20 6.5"></path></svg>
               </a>
             </li>
