@@ -961,7 +961,7 @@
 
 <span class="text-code-keyword">func</span> Marko() <span class="text-muted-foreground">Engineer</span> {
   <span class="text-code-keyword">return</span> <span class="text-muted-foreground">Engineer</span>{
-    Name:  <span class="text-code-string">"Marko Z. Petković"</span>,
+    Name: <span class="text-code-string">"Marko Z. Petković"</span>,
     Stack: <span class="text-muted-foreground">map</span>[<span class="text-muted-foreground">string</span>][]<span class="text-muted-foreground">string</span>{
       <span class="text-code-string">"primary"</span>: {
         <span class="text-code-string">"Go"</span>, <span class="text-code-string">"Java"</span>,
@@ -977,7 +977,16 @@
         <span class="text-code-string">"GCP"</span>, <span class="text-code-string">"AWS"</span>, <span class="text-code-string">"Azure"</span>,
       },
     },
-    Base:  <span class="text-code-string">"Niš, Serbia"</span>,
+    Base: <span class="text-code-string">"Niš, Serbia"</span>,
+  }
+}
+
+<span class="text-code-keyword">func</span> (e <span class="text-muted-foreground">Engineer</span>) Build() <span class="text-muted-foreground">Solution</span> {
+  <span class="text-code-keyword">return</span> <span class="text-muted-foreground">Solution</span>{
+    Quality:     <span class="text-code-string">"high"</span>,
+    Reliability: <span class="text-code-string">"proven"</span>,
+    Scalability: <span class="text-code-string">"horizontal"</span>,
+    Security:    <span class="text-code-string">"by design"</span>,
   }
 }
 
