@@ -288,6 +288,7 @@
     /* "show more..." / "show less..." only expand or fold the About text; the courses list is independent. */
     var state = { aboutExpanded: false, showAllCourses: false, coursesOpenedByAbout: false };
 
+    var COURSE_PAGE_GAP = 10;
     var courseScrollFrame = 0;
     var cancelCourseScroll = function () {
       if (courseScrollFrame) {
@@ -298,35 +299,64 @@
     var easeInOutCubic = function (t) {
       return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     };
-    var courseScrollTarget = function (second) {
+    var headerBottom = function () {
+      return header ? header.getBoundingClientRect().bottom : 0;
+    };
+    var courseCard = function (second) {
+      return $("article", second) || second;
+    };
+    var courseListTarget = function (second) {
       return list.scrollTop + second.getBoundingClientRect().top - list.getBoundingClientRect().top - list.clientTop;
+    };
+    var coursePageTarget = function (second) {
+      var card = courseCard(second);
+      var y = window.scrollY + card.getBoundingClientRect().top - headerBottom() - COURSE_PAGE_GAP;
+      var max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      if (y < 0) y = 0;
+      if (y > max) y = max;
+      return y;
+    };
+    var setPageScroll = function (y) {
+      // html { scroll-behavior: smooth } would otherwise delay or swallow window.scrollTo.
+      try {
+        window.scrollTo({ top: y, left: 0, behavior: "instant" });
+      } catch (err) {
+        document.documentElement.scrollTop = y;
+      }
     };
     var scrollCoursesToSecond = function () {
       var second = list.children[1];
       if (!second) return;
-      var from = list.scrollTop;
-      var to = courseScrollTarget(second);
-      if (Math.abs(to - from) < 1) return;
+      var fromList = list.scrollTop;
+      var fromPage = window.scrollY;
+      var applyInstant = function () {
+        list.scrollTop = courseListTarget(second);
+        setPageScroll(coursePageTarget(second));
+      };
       var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) { list.scrollTop = courseScrollTarget(second); return; }
+      if (reduce) { applyInstant(); return; }
+      var destList0 = courseListTarget(second);
+      var destPage0 = coursePageTarget(second);
+      if (Math.abs(destList0 - fromList) < 1 && Math.abs(destPage0 - fromPage) < 1) return;
       cancelCourseScroll();
       var duration = 1000;
       var start = performance.now();
       var step = function (now) {
         var t = Math.min(1, (now - start) / duration);
-        var dest = courseScrollTarget(second);
-        list.scrollTop = from + (dest - from) * easeInOutCubic(t);
+        var e = easeInOutCubic(t);
+        list.scrollTop = fromList + (courseListTarget(second) - fromList) * e;
+        setPageScroll(fromPage + (coursePageTarget(second) - fromPage) * e);
         if (t < 1) courseScrollFrame = requestAnimationFrame(step);
         else {
-          list.scrollTop = courseScrollTarget(second);
+          applyInstant();
           courseScrollFrame = 0;
         }
       };
       courseScrollFrame = requestAnimationFrame(step);
     };
-    list.addEventListener("wheel", cancelCourseScroll, { passive: true });
-    list.addEventListener("touchstart", cancelCourseScroll, { passive: true });
-    list.addEventListener("pointerdown", cancelCourseScroll);
+    window.addEventListener("wheel", cancelCourseScroll, { passive: true });
+    window.addEventListener("touchstart", cancelCourseScroll, { passive: true });
+    window.addEventListener("pointerdown", cancelCourseScroll);
 
     var render = function (prev) {
       if (prev.showAllCourses !== state.showAllCourses) {
@@ -344,7 +374,8 @@
         }
         measure();
         // On phones and tablets (below 1024px), "Show All Courses" scrolls the
-        // course window — not the page — so the second course is at the top.
+        // course window so the second course is at the top, and the page so
+        // that course sits just below the sticky header.
         if (state.showAllCourses && !(deskMq && deskMq.matches)) {
           requestAnimationFrame(function () {
             requestAnimationFrame(function () { scrollCoursesToSecond(); });
