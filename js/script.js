@@ -8,7 +8,7 @@
  *   5. Courses list: custom scrollbar, "Show All Courses", About "show more..."
  *   6. Footer year, opening a #section link from another page
  *   7. Education: "Follow for Go tips & tricks!" lined up with the links
- *   8. profile.go card: scale the code font so the longest line fills the width
+ *   8. profile.go card: wrap stack items to fill the width of the IDE card
  */
 (function () {
   "use strict";
@@ -386,53 +386,86 @@
   }
 
 
+
   /* ------------------------------------------------------------------ */
-  /* 8. profile.go: scale the font so the longest line fills the card,   */
-  /*    leaving a small right margin (~ the left padding, up to 16px).   */
-  /*    Min 10px (horizontal scroll is the fallback), max 32px so the    */
-  /*    line can still fill a full-width tablet card.                    */
+  /* 8. profile.go: pack "primary" / "secondary" items onto as many     */
+  /*    columns as fit the card width (font size stays the same). The   */
+  /*    static HTML keeps two items per line if JS does not run.        */
   /* ------------------------------------------------------------------ */
   var profilePre = $(".profile-ide pre");
   if (profilePre) {
-    var PROFILE_FONT_REF = 12;
-    var PROFILE_FONT_MIN = 10;
-    var PROFILE_FONT_MAX = 32;
-    var fittingCode = false;
-    var fitProfileCode = function () {
-      if (fittingCode) return;
-      fittingCode = true;
-      var cs = getComputedStyle(profilePre);
-      var code = $("code", profilePre) || profilePre;
-      var lines = (code.textContent || "").split("\n");
-      var longest = "";
-      lines.forEach(function (line) { if (line.length > longest.length) longest = line; });
+    var STACK_INDENT = "        ";
+    var stackBlocks = $$("[data-stack]", profilePre).map(function (el) {
+      var items = $$("span", el).map(function (s) {
+        return s.textContent.replace(/^"|"$/g, "");
+      });
+      return { el: el, items: items };
+    });
+    var fittingStack = false;
+    var lastPackKey = "";
+    var measureText = function (text, family, weight, style, spacing, size) {
       var probe = document.createElement("span");
       probe.style.cssText = "position:absolute;left:-9999px;top:0;visibility:hidden;white-space:pre;";
-      probe.style.fontFamily = cs.fontFamily;
-      probe.style.fontWeight = cs.fontWeight;
-      probe.style.fontStyle = cs.fontStyle;
-      probe.style.letterSpacing = cs.letterSpacing;
-      probe.style.fontSize = PROFILE_FONT_REF + "px";
-      probe.textContent = longest || " ";
+      probe.style.fontFamily = family;
+      probe.style.fontWeight = weight;
+      probe.style.fontStyle = style;
+      probe.style.letterSpacing = spacing;
+      probe.style.fontSize = size;
+      probe.textContent = text;
       document.body.appendChild(probe);
-      var measured = probe.getBoundingClientRect().width;
+      var w = probe.getBoundingClientRect().width;
       document.body.removeChild(probe);
+      return w;
+    };
+    var itemMarkup = function (value) {
+      return '<span class="text-code-string">"' + value + '"</span>,';
+    };
+    var wrapStacks = function () {
+      if (fittingStack || !stackBlocks.length) return;
+      fittingStack = true;
+      var cs = getComputedStyle(profilePre);
       var padL = parseFloat(cs.paddingLeft) || 0;
       var padR = parseFloat(cs.paddingRight) || 0;
       var inner = profilePre.clientWidth - padL - padR;
       var margin = Math.min(padL || 16, 16);
       var available = Math.max(0, inner - margin);
-      var size = measured > 0 ? PROFILE_FONT_REF * available / measured : PROFILE_FONT_REF;
-      if (size < PROFILE_FONT_MIN) size = PROFILE_FONT_MIN;
-      if (size > PROFILE_FONT_MAX) size = PROFILE_FONT_MAX;
-      profilePre.style.fontSize = size.toFixed(2) + "px";
-      profilePre.style.lineHeight = "1.7";
-      fittingCode = false;
+      var fontKey = measureText("Mg", cs.fontFamily, cs.fontWeight, cs.fontStyle, cs.letterSpacing, cs.fontSize).toFixed(2);
+      var key = [profilePre.clientWidth, available.toFixed(2), cs.fontSize, fontKey].join(":");
+      if (key === lastPackKey) { fittingStack = false; return; }
+      var indentW = measureText(STACK_INDENT, cs.fontFamily, cs.fontWeight, cs.fontStyle, cs.letterSpacing, cs.fontSize);
+      var spaceW = measureText(" ", cs.fontFamily, cs.fontWeight, cs.fontStyle, cs.letterSpacing, cs.fontSize);
+      stackBlocks.forEach(function (block) {
+        var itemWidths = block.items.map(function (value) {
+          return measureText('"' + value + '",', cs.fontFamily, cs.fontWeight, cs.fontStyle, cs.letterSpacing, cs.fontSize);
+        });
+        var lines = [];
+        var current = [];
+        var currentW = 0;
+        block.items.forEach(function (value, i) {
+          var w = itemWidths[i];
+          var extra = current.length === 0 ? indentW : spaceW;
+          if (current.length && currentW + extra + w > available + 0.5) {
+            lines.push(current);
+            current = [];
+            currentW = 0;
+            extra = indentW;
+          }
+          current.push(value);
+          currentW += extra + w;
+        });
+        if (current.length) lines.push(current);
+        var html = lines.map(function (line) {
+          return STACK_INDENT + line.map(itemMarkup).join(" ");
+        }).join("\n") + "\n";
+        block.el.innerHTML = html;
+      });
+      lastPackKey = key;
+      fittingStack = false;
     };
-    fitProfileCode();
-    if (window.ResizeObserver) new ResizeObserver(fitProfileCode).observe(profilePre);
-    window.addEventListener("resize", fitProfileCode);
-    window.addEventListener("load", fitProfileCode);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitProfileCode);
+    wrapStacks();
+    if (window.ResizeObserver) new ResizeObserver(wrapStacks).observe(profilePre);
+    window.addEventListener("resize", wrapStacks);
+    window.addEventListener("load", wrapStacks);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(wrapStacks);
   }
 })();

@@ -4870,11 +4870,6 @@ main:focus {
 .profile-ide {
   overflow-y: hidden;
 }
-/* Approximate fluid size until JS fits the longest line to the card width. */
-.profile-ide pre {
-  font-size: clamp(10px, 2.25vw + 5px, 32px);
-  line-height: 1.7;
-}
 @media (max-width: 39.99rem) {
   .profile-ide pre {
     padding-left: 0.875rem;
